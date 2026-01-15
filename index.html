@@ -128,11 +128,138 @@
 
         /* Hero Section */
         .hero {
+            position: relative;
             max-width: 1200px;
             margin: 0 auto;
             padding: 6rem 2rem 4rem;
             text-align: center;
             animation: fadeInUp 0.8s ease 0.2s both;
+            overflow: hidden;
+        }
+
+        /* Video Background */
+        .hero-video-bg {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.25;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Dark overlay to reduce video distraction */
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(13, 30, 40, 0.4);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .video-cta {
+            margin-top: 2rem;
+            display: inline-block;
+        }
+
+        .video-link {
+            color: var(--gray-800);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 8px;
+        }
+
+        .video-link:hover {
+            color: var(--dark);
+            background: rgba(255, 255, 255, 1);
+            border-bottom-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Video Modal */
+        .video-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 10000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .video-modal-content {
+            position: relative;
+            width: 90%;
+            max-width: 1000px;
+        }
+
+        .video-close {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: var(--primary);
+            color: var(--dark);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .video-close:hover {
+            background: var(--primary-dark);
+            transform: scale(1.05);
+        }
+
+        .video-player {
+            width: 100%;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .video-close {
+                top: -45px;
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+            }
+            
+            .hero-video-bg {
+                opacity: 0.15;
+            }
         }
 
         @keyframes fadeInUp {
@@ -158,18 +285,26 @@
             font-weight: 700;
             margin-bottom: 1.5rem;
             line-height: 1.1;
-            background: linear-gradient(135deg, var(--text) 0%, var(--gray-400) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: var(--text);
+            text-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.8),
+                0 4px 8px rgba(0, 0, 0, 0.6),
+                0 8px 16px rgba(0, 0, 0, 0.4);
+            display: inline-block;
+            padding: 0;
         }
 
         .subtitle {
-            font-size: 1.5rem;
-            color: var(--text-secondary);
+            font-size: 1.25rem;
+            color: var(--gray-200);
             max-width: 700px;
             margin: 0 auto 3rem;
-            font-weight: 300;
+            font-weight: 400;
+            text-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.9),
+                0 4px 8px rgba(0, 0, 0, 0.7);
+            display: inline-block;
+            padding: 0;
         }
 
         /* CTA Buttons */
@@ -225,14 +360,14 @@
         }
 
         .btn-secondary {
-            background: transparent;
-            color: var(--text);
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--dark);
             border: 2px solid var(--gray-700);
         }
 
         .btn-secondary:hover {
             border-color: var(--primary);
-            background: rgba(62, 207, 178, 0.1);
+            background: rgba(255, 255, 255, 1);
             transform: translateY(-2px);
         }
 
@@ -461,22 +596,35 @@
 
     <main>
         <section class="hero">
-            <h1>AI Development Playbook</h1>
-            <p class="subtitle">
-                A comprehensive framework for building high-quality software with AI tools.
-                From specification to deployment, ship faster without compromising quality.
-            </p>
-            <div class="cta-buttons">
-                    <a href="docs.html?doc=content/shared/start-here.md" class="btn btn-primary">
-                        New to AI Dev?
-                        <span>→</span>
+            <!-- Looping background video -->
+            <video class="hero-video-bg" autoplay muted loop playsinline>
+                <source src="content/videos/payoff-loop.mp4" type="video/mp4">
+            </video>
+
+            <div class="hero-content">
+                <h1>AI Development Playbook</h1>
+                <p class="subtitle">
+                    A comprehensive framework for building high-quality software with AI tools.
+                    From specification to deployment, ship faster without compromising quality.
+                </p>
+                <div class="cta-buttons">
+                        <a href="docs.html?doc=content/shared/start-here.md" class="btn btn-primary">
+                            New to AI Dev?
+                            <span>→</span>
+                        </a>
+                        <a href="quick-reference.html" class="btn btn-secondary">
+                            Experienced? Quick Ref
+                        </a>
+                        <a href="docs.html" class="btn btn-secondary">
+                            Browse All Docs
+                        </a>
+                </div>
+
+                <div class="video-cta">
+                    <a href="#" class="video-link" id="openVideoBtn">
+                        🎬 Watch: Why we built this guide (7 min)
                     </a>
-                    <a href="quick-reference.html" class="btn btn-secondary">
-                        Experienced? Quick Ref
-                    </a>
-                    <a href="docs.html" class="btn btn-secondary">
-                        Browse All Docs
-                    </a>
+                </div>
             </div>
         </section>
 
@@ -655,10 +803,57 @@
         </div>
     </footer>
 
+    <!-- Video Modal -->
+    <div class="video-modal" id="videoModal">
+        <div class="video-modal-content">
+            <button class="video-close" id="closeVideoBtn">✕ Close</button>
+            <video class="video-player" id="fullVideo" controls>
+                <source src="content/videos/ai-dev-guide-full.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+
     <!-- Optional Analytics: Uncomment and replace YOUR-SITE with your GoatCounter site code -->
     <!-- <script data-goatcounter="https://YOUR-SITE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script> -->
 
     <script>
+        // Video Modal functionality
+        const videoModal = document.getElementById('videoModal');
+        const openVideoBtn = document.getElementById('openVideoBtn');
+        const closeVideoBtn = document.getElementById('closeVideoBtn');
+        const fullVideo = document.getElementById('fullVideo');
+
+        // Open modal
+        openVideoBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            videoModal.style.display = 'flex';
+            fullVideo.play();
+        });
+
+        // Close modal
+        function closeModal() {
+            videoModal.style.display = 'none';
+            fullVideo.pause();
+            fullVideo.currentTime = 0;
+        }
+
+        closeVideoBtn.addEventListener('click', closeModal);
+
+        // Close on click outside
+        videoModal.addEventListener('click', (e) => {
+            if (e.target === videoModal) {
+                closeModal();
+            }
+        });
+
+        // Close on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && videoModal.style.display === 'flex') {
+                closeModal();
+            }
+        });
+
         // Handle hash/anchor links - scroll to element manually (consistent with other pages)
         document.addEventListener('click', (e) => {
             const a = e.target.closest('a');
