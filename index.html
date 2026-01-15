@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Development Playbook</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Archivo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Taazaa Brand Colors - Dark Theme */
+            --primary: #3ECFB2;
+            --primary-dark: #2BA88F;
+            --secondary: #1A3A4A;
+            --accent: #3ECFB2;
+            --dark: #1A3A4A;
+            --gray-900: #1E3545;
+            --gray-800: #2A4A5A;
+            --gray-700: #3A5A6A;
+            --gray-600: #5A7A8A;
+            --gray-400: #8AAABC;
+            --gray-200: #C5D5E0;
+            --gray-100: #E5EEF5;
+            --bg: #0D1E28;
+            --text: #F5F5F7;
+            --text-secondary: #A1B5C5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Archivo', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated gradient background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 50%, rgba(62, 207, 178, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(26, 58, 74, 0.2) 0%, transparent 50%);
+            animation: gradientShift 20s ease infinite;
+            z-index: -1;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            50% { transform: translate(-10%, -5%) rotate(180deg); }
+        }
+
+        /* Header */
+        header {
+            border-bottom: 1px solid var(--gray-800);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: slideDown 0.6s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 6rem 2rem 4rem;
+            text-align: center;
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .version-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(10, 132, 255, 0.1);
+            border: 1px solid rgba(10, 132, 255, 0.3);
+            border-radius: 50px;
+            color: var(--primary);
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            font-family: 'Space Mono', monospace;
+        }
+
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+            background: linear-gradient(135deg, var(--text) 0%, var(--gray-400) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+            font-weight: 300;
+        }
+
+        /* CTA Buttons */
+        .cta-buttons {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--secondary);
+            border: none;
+            box-shadow: 0 10px 30px rgba(62, 207, 178, 0.3);
+            font-weight: 700;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 40px rgba(62, 207, 178, 0.4);
+            background: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            border: 2px solid var(--gray-700);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            background: rgba(62, 207, 178, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* Getting Started Section */
+        .getting-started {
+            max-width: 1200px;
+            margin: 6rem auto;
+            padding: 0 2rem;
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 1.25rem;
+            margin-bottom: 4rem;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .step-card {
+            background: var(--gray-900);
+            border: 1px solid var(--gray-800);
+            border-radius: 16px;
+            padding: 2.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        .step-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--primary);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .step-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            color: var(--secondary);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Space Mono', monospace;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .step-description {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Personas Section */
+        .personas {
+            max-width: 1200px;
+            margin: 6rem auto;
+            padding: 0 2rem;
+        }
+
+        .personas-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .persona-card {
+            background: linear-gradient(135deg, var(--gray-900) 0%, var(--dark) 100%);
+            border: 1px solid var(--gray-800);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .persona-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .persona-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .persona-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .persona-subtitle {
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .persona-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .persona-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+
+        .persona-list li::before {
+            content: '→';
+            color: var(--primary);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--gray-800);
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 6rem;
+            background: var(--dark);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            color: var(--gray-600);
+            font-size: 0.875rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            .subtitle {
+                font-size: 1.25rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">AI Development Playbook</div>
+            <ul class="nav-links">
+                <li><a href="#getting-started">Getting Started</a></li>
+                <li><a href="sop.html">Full SOP</a></li>
+                <li><a href="quick-reference.html">Quick Reference</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero">
+            <h1>AI Development Playbook</h1>
+            <p class="subtitle">
+                A comprehensive framework for building high-quality software with AI tools.
+                From specification to deployment, ship faster without compromising quality.
+            </p>
+            <div class="cta-buttons">
+                    <a href="docs.html?doc=content/shared/start-here.md" class="btn btn-primary">
+                        New to AI Dev?
+                        <span>→</span>
+                    </a>
+                    <a href="quick-reference.html" class="btn btn-secondary">
+                        Experienced? Quick Ref
+                    </a>
+                    <a href="docs.html" class="btn btn-secondary">
+                        Browse All Docs
+                    </a>
+            </div>
+        </section>
+
+        <section class="getting-started" id="getting-started">
+            <h2 class="section-title">Getting Started</h2>
+            <p class="section-subtitle">
+                Your journey to high-quality AI-assisted development starts here
+            </p>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Understand the Why</h3>
+                    <p class="step-description">
+                        AI tools generate code incredibly fast, but without process, teams ship bugs, drift from architecture, and waste time on rework. This framework ensures AI builds exactly what you need, with quality baked in.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Choose Your Path</h3>
+                    <p class="step-description">
+                        <strong>First time?</strong> Read the full SOP to understand the complete workflow.<br><br>
+                        <strong>Need a refresher?</strong> Jump to the Quick Reference for daily guidance.<br><br>
+                        <strong>Leading a team?</strong> Review the Customization Guide in the SOP.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Customize for Your Org</h3>
+                    <p class="step-description">
+                        Before distribution, update document owner, adjust paths for your project structure, configure tool setups for your tech stack, and adapt story ID formats to your conventions.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h3 class="step-title">Start with Phase 0</h3>
+                    <p class="step-description">
+                        Every feature begins with foundation work: understand requirements, read your constitution, create/review specifications, and perform pre-implementation analysis. Invest 30-60 minutes upfront to save hours of rework.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">5</div>
+                    <h3 class="step-title">Follow the 5-Phase Flow</h3>
+                    <p class="step-description">
+                        Foundation → Specification → GitHub Issues → Implementation (TDD) → Multi-Model Review. Each phase has clear checkpoints. Don't skip gates—they catch issues early when they're cheap to fix.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">6</div>
+                    <h3 class="step-title">Master Test-First</h3>
+                    <p class="step-description">
+                        TDD is non-negotiable with AI code. Write tests FIRST (RED), implement to pass (GREEN), then refactor (CLEAN). AI-generated code looks correct but has hidden edge cases—tests catch them immediately.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="personas">
+            <h2 class="section-title">Find Your Starting Point</h2>
+            <p class="section-subtitle">Different roles, different needs</p>
+
+            <div class="personas-grid">
+                <div class="persona-card">
+                    <div class="persona-icon">👨‍💻</div>
+                    <h3 class="persona-title">Junior Developers</h3>
+                    <p class="persona-subtitle">Building your first AI-assisted features</p>
+                    <ul class="persona-list">
+                        <li>Read full SOP first (30 minutes)</li>
+                        <li>Use every checkpoint and prompt</li>
+                        <li>Pair with senior on first 2-3 features</li>
+                        <li>Keep Quick Reference open while coding</li>
+                        <li>After 5 features, you'll be at 6hr/feature pace</li>
+                    </ul>
+                </div>
+
+                <div class="persona-card">
+                    <div class="persona-icon">🚀</div>
+                    <h3 class="persona-title">Experienced Developers</h3>
+                    <p class="persona-subtitle">Transitioning to AI-assisted workflows</p>
+                    <ul class="persona-list">
+                        <li>Skim the SOP (focus on "What's Different")</li>
+                        <li>Understand reviewer independence rule</li>
+                        <li>Master TDD workflow with AI tools</li>
+                        <li>Use Quick Reference as daily guide</li>
+                        <li>Customize prompts to your style</li>
+                    </ul>
+                </div>
+
+                <div class="persona-card">
+                    <div class="persona-icon">🎯</div>
+                    <h3 class="persona-title">Tech Leads & Managers</h3>
+                    <p class="persona-subtitle">Rolling out AI development to your team</p>
+                    <ul class="persona-list">
+                        <li>Review Customization Guide first</li>
+                        <li>Adapt constitution and tool setups</li>
+                        <li>Run pilot program with 2-3 developers</li>
+                        <li>Track success metrics (time, quality, coverage)</li>
+                        <li>Iterate based on team feedback</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="getting-started">
+            <h2 class="section-title">Key Principles</h2>
+            <p class="section-subtitle">What makes AI-assisted development different</p>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">📝</div>
+                    <h3 class="step-title">Specs Are Mandatory</h3>
+                    <p class="step-description">
+                        A clear 30-minute spec saves hours of AI going in circles. Quality of spec = quality of output. Without detailed specs, AI builds the wrong thing efficiently.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">🧪</div>
+                    <h3 class="step-title">Test-First Always</h3>
+                    <p class="step-description">
+                        AI code looks correct but has hidden bugs. Writing tests first (TDD) catches edge cases immediately. 80% coverage minimum, no exceptions.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">🔄</div>
+                    <h3 class="step-title">Multiple AI Reviews</h3>
+                    <p class="step-description">
+                        Same AI makes same mistakes. Code by Claude → Review by Copilot catches 40% more bugs. Different models have different blind spots.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">📚</div>
+                    <h3 class="step-title">Constitution Enforces Patterns</h3>
+                    <p class="step-description">
+                        AI can memorize and enforce architectural patterns better than humans. Your constitution ensures consistency across all features and developers.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">⏱️</div>
+                    <h3 class="step-title">Invest Upfront</h3>
+                    <p class="step-description">
+                        Spend 1-2 hours in specs/planning to save 5-10 hours of rework. First feature takes ~12 hours. After 5 features, you're down to ~6 hours.
+                    </p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">🎯</div>
+                    <h3 class="step-title">Quality Over Speed</h3>
+                    <p class="step-description">
+                        AI generates code fast. This workflow ensures that speed doesn't compromise quality. Ship features faster AND with fewer bugs.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="sop.html">Full SOP</a>
+                <a href="quick-reference.html">Quick Reference</a>
+                <a href="#getting-started">Getting Started</a>
+                <a href="https://github.com">GitHub</a>
+            </div>
+            <p class="copyright">
+                AI-Assisted Development Guide v1.4.0 | Production Ready | 2026
+            </p>
+        </div>
+    </footer>
+
+    <!-- Optional Analytics: Uncomment and replace YOUR-SITE with your GoatCounter site code -->
+    <!-- <script data-goatcounter="https://YOUR-SITE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script> -->
+
+    <script>
+        // Handle hash/anchor links - scroll to element manually (consistent with other pages)
+        document.addEventListener('click', (e) => {
+            const a = e.target.closest('a');
+            if (!a) return;
+
+            const href = a.getAttribute('href') || '';
+            if (!href.startsWith('#')) return;
+
+            const targetId = href.slice(1);
+            const targetEl = document.getElementById(targetId);
+            if (targetEl) {
+                e.preventDefault();
+                targetEl.scrollIntoView({ behavior: 'smooth' });
+                history.replaceState(null, '', href);
+            }
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.step-card, .persona-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

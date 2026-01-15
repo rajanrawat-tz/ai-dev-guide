@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Development Playbook | Docs</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=IBM+Plex+Sans:wght@300;400;600;700&display=swap"
+        rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <style>
+        :root {
+            /* Taazaa Brand Colors - Light Theme */
+            --primary: #3ECFB2;
+            --primary-dark: #2BA88F;
+            --primary-light: #E8FAF6;
+            --secondary: #1A3A4A;
+            --accent: #3ECFB2;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --dark: #1A2B3C;
+            --gray-900: #1E293B;
+            --gray-800: #334155;
+            --gray-700: #475569;
+            --gray-600: #64748B;
+            --gray-500: #94A3B8;
+            --gray-400: #CBD5E1;
+            --gray-300: #E2E8F0;
+            --gray-200: #F1F5F9;
+            --gray-100: #F8FAFC;
+            --bg: #FFFFFF;
+            --text: #1A2B3C;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+            background: var(--gray-100);
+            color: var(--text);
+            line-height: 1.7;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-bottom: 2px solid var(--gray-300);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .header-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--secondary);
+            font-family: 'IBM Plex Mono', monospace;
+            white-space: nowrap;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 0.65rem 1rem;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            border: 1px solid transparent;
+            background: transparent;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: var(--secondary);
+            border: none;
+            font-weight: 700;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(62, 207, 178, 0.3);
+        }
+
+        .btn-secondary {
+            color: var(--gray-700);
+            border: 1px solid var(--gray-400);
+            background: white;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Layout */
+        .layout {
+            display: flex;
+            max-width: 1800px;
+            margin: 0 auto;
+            align-items: stretch;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 320px;
+            background: white;
+            border-right: 1px solid var(--gray-300);
+            height: calc(100vh - 74px);
+            position: sticky;
+            top: 74px;
+            overflow-y: auto;
+            padding: 1.25rem 0;
+        }
+
+        .sidebar-section {
+            padding: 0 1.25rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .toc {
+            margin-bottom: 1rem;
+            background: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            border-radius: 12px;
+            overflow: hidden;
+            display: none; /* shown when this page has headings */
+        }
+
+        .toc summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 0.75rem 1rem;
+            font-weight: 800;
+            color: var(--gray-700);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            user-select: none;
+        }
+
+        .toc summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .toc summary .hint {
+            font-weight: 600;
+            text-transform: none;
+            letter-spacing: 0;
+            font-size: 0.8rem;
+            color: var(--gray-600);
+        }
+
+        .toc .toc-body {
+            padding: 0 0.5rem 0.75rem;
+        }
+
+        .sidebar-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0.75rem 0;
+        }
+
+        .nav-links {
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-bottom: 0.25rem;
+        }
+
+        .nav-links a {
+            display: block;
+            padding: 0.5rem 0.75rem;
+            color: var(--gray-700);
+            text-decoration: none;
+            border-radius: 6px;
+            transition: all 0.15s ease;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            background: var(--gray-200);
+            color: var(--primary);
+        }
+
+        .nav-links a.active {
+            background: var(--primary);
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        .muted {
+            color: var(--gray-600);
+        }
+
+        .small {
+            font-size: 0.85rem;
+        }
+
+        /* Search UI */
+        .search {
+            display: none; /* enabled by JS when SEARCH_ENABLED */
+            padding: 0.75rem 1rem;
+            background: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+        }
+
+        .search-row {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .search input {
+            width: 100%;
+            padding: 0.6rem 0.75rem;
+            border-radius: 10px;
+            border: 1px solid var(--gray-300);
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .search input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(62, 207, 178, 0.15);
+        }
+
+        .search-results {
+            margin-top: 0.75rem;
+            display: none;
+            max-height: 260px;
+            overflow-y: auto;
+            padding-right: 0.25rem;
+        }
+
+        .search-results a {
+            display: block;
+            padding: 0.5rem 0.6rem;
+            border-radius: 10px;
+            text-decoration: none;
+            border: 1px solid transparent;
+            background: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .search-results a:hover {
+            border-color: var(--primary);
+        }
+
+        .search-results .title {
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .search-results .snippet {
+            margin-top: 0.15rem;
+            color: var(--gray-700);
+            font-size: 0.85rem;
+        }
+
+        /* Main */
+        .main-content {
+            flex: 1;
+            padding: 2.25rem 3rem;
+            max-width: 1200px;
+        }
+
+        /* Markdown Content Styles */
+        .markdown-body h1 {
+            font-size: 2.75rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+            border-bottom: none;
+        }
+
+        .markdown-body h2 {
+            font-size: 2rem;
+            margin: 3rem 0 1.25rem;
+            color: var(--dark);
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid var(--gray-300);
+            scroll-margin-top: 100px;
+        }
+
+        .markdown-body h3 {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: var(--secondary);
+            scroll-margin-top: 100px;
+        }
+
+        .markdown-body h4 {
+            font-size: 1.25rem;
+            margin: 1.5rem 0 0.75rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .markdown-body p {
+            margin-bottom: 1rem;
+            color: var(--gray-800);
+        }
+
+        .markdown-body ul,
+        .markdown-body ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+
+        .markdown-body li {
+            margin-bottom: 0.5rem;
+        }
+
+        .markdown-body table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.25rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+            font-size: 0.9rem;
+        }
+
+        .markdown-body thead {
+            background: var(--gray-900);
+            color: white;
+        }
+
+        .markdown-body th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .markdown-body td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .markdown-body tr:hover {
+            background: var(--gray-100);
+        }
+
+        .markdown-body blockquote {
+            border-left: 4px solid var(--primary);
+            background: var(--gray-100);
+            padding: 1rem 1.25rem;
+            margin: 1.25rem 0;
+            border-radius: 0 8px 8px 0;
+            color: var(--gray-700);
+        }
+
+        .markdown-body pre {
+            background: var(--dark);
+            color: #E2E8F0;
+            padding: 1.25rem;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin: 1.25rem 0;
+        }
+
+        .markdown-body code {
+            font-family: 'IBM Plex Mono', monospace;
+            background: var(--gray-200);
+            padding: 0.2rem 0.45rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+            color: var(--secondary);
+        }
+
+        .markdown-body pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        .markdown-body input[type="checkbox"] {
+            margin-right: 0.5rem;
+        }
+
+        .markdown-body hr {
+            border: none;
+            border-top: 2px solid var(--gray-300);
+            margin: 3rem 0;
+        }
+
+        /* Inline TOC (Option B) */
+        .inline-toc {
+            background: white;
+            border: 1px solid var(--gray-300);
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            margin: 1.25rem 0 2rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .inline-toc-title {
+            font-size: 0.85rem;
+            font-weight: 800;
+            color: var(--gray-700);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.75rem;
+        }
+
+        .inline-toc a {
+            text-decoration: none;
+            color: var(--gray-700);
+            display: block;
+            padding: 0.35rem 0.5rem;
+            border-radius: 8px;
+        }
+
+        .inline-toc a:hover {
+            background: var(--gray-100);
+            color: var(--primary);
+        }
+
+        .inline-toc .toc-h3 {
+            margin-left: 1rem;
+            color: var(--gray-600);
+            font-size: 0.93rem;
+        }
+
+        /* Floating contents button + overlay */
+        .contents-fab {
+            position: fixed;
+            right: 1.25rem;
+            bottom: 1.25rem;
+            z-index: 1001;
+            display: none;
+            border: none;
+            border-radius: 999px;
+            padding: 0.75rem 1rem;
+            background: var(--primary);
+            color: var(--secondary);
+            font-weight: 800;
+            box-shadow: 0 10px 30px rgba(62, 207, 178, 0.35);
+            cursor: pointer;
+        }
+
+        .contents-fab:hover {
+            transform: translateY(-1px);
+        }
+
+        .toc-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(15, 23, 42, 0.55);
+            z-index: 1002;
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .toc-sheet {
+            width: 100%;
+            max-width: 680px;
+            background: white;
+            border-radius: 16px;
+            border: 1px solid var(--gray-300);
+            overflow: hidden;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .toc-sheet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.25rem;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .toc-sheet-header .title {
+            font-weight: 900;
+            color: var(--dark);
+        }
+
+        .toc-sheet-header .close {
+            border: 1px solid var(--gray-300);
+            background: white;
+            border-radius: 10px;
+            padding: 0.4rem 0.65rem;
+            cursor: pointer;
+            font-weight: 800;
+            color: var(--gray-700);
+        }
+
+        .toc-sheet-body {
+            max-height: 55vh;
+            overflow-y: auto;
+            padding: 0.75rem 0.75rem 1rem;
+        }
+
+        .toc-sheet-body a {
+            display: block;
+            text-decoration: none;
+            color: var(--gray-800);
+            padding: 0.6rem 0.75rem;
+            border-radius: 12px;
+        }
+
+        .toc-sheet-body a:hover {
+            background: var(--gray-100);
+            color: var(--primary);
+        }
+
+        .toc-sheet-body a.toc-h3 {
+            margin-left: 1rem;
+            color: var(--gray-700);
+            font-size: 0.95rem;
+        }
+
+        /* Loading & Error States */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 4rem;
+            color: var(--gray-500);
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--gray-200);
+            border-top: 4px solid var(--secondary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .error-message {
+            background: #FEF2F2;
+            border: 1px solid #EF4444;
+            color: #991B1B;
+            padding: 2rem;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .error-message code {
+            background: rgba(0, 0, 0, 0.1);
+            color: #7F1D1D;
+        }
+
+        /* Breadcrumbs */
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--gray-600);
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .breadcrumbs a {
+            color: var(--gray-600);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .breadcrumbs a:hover {
+            color: var(--primary);
+        }
+
+        .breadcrumbs .separator {
+            color: var(--gray-400);
+        }
+
+        .breadcrumbs .current {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        /* Prev/Next Navigation */
+        .page-nav {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--gray-300);
+        }
+
+        .page-nav-link {
+            display: flex;
+            flex-direction: column;
+            padding: 1rem 1.25rem;
+            background: white;
+            border: 1px solid var(--gray-300);
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            max-width: 45%;
+        }
+
+        .page-nav-link:hover {
+            border-color: var(--primary);
+            background: var(--primary-light);
+        }
+
+        .page-nav-link.prev {
+            align-items: flex-start;
+        }
+
+        .page-nav-link.next {
+            align-items: flex-end;
+            margin-left: auto;
+        }
+
+        .page-nav-label {
+            font-size: 0.75rem;
+            color: var(--gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.25rem;
+        }
+
+        .page-nav-title {
+            color: var(--secondary);
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        /* Edit Link */
+        .edit-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            font-size: 0.85rem;
+            color: var(--gray-600);
+            text-decoration: none;
+            margin-top: 2rem;
+            padding: 0.5rem 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .edit-link:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                padding: 1.75rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .header-actions {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="header-title">AI Development Playbook</div>
+            <div class="header-actions">
+                <a href="index.html" class="btn btn-secondary">← Home</a>
+                <a href="quick-reference.html" class="btn btn-secondary">Quick Reference</a>
+                <a href="sop.html" class="btn btn-secondary">Full SOP</a>
+                <a id="downloadLink" class="btn btn-primary" href="#">📥 Download MD</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-section">
+                <div id="searchBox" class="search">
+                    <div class="search-row">
+                        <input id="searchInput" type="search" placeholder="Search docs…" autocomplete="off" />
+                    </div>
+                    <div id="searchResults" class="search-results"></div>
+                    <div class="muted small" style="margin-top:0.35rem;">Tip: results open in this page.</div>
+                </div>
+
+                <div class="sidebar-title">Start</div>
+                <ul class="nav-links" id="nav-start"></ul>
+
+                <div class="sidebar-title">Phases</div>
+                <ul class="nav-links" id="nav-phases"></ul>
+
+                <div class="sidebar-title">Roles</div>
+                <ul class="nav-links" id="nav-roles"></ul>
+
+                <div class="sidebar-title">Shared</div>
+                <ul class="nav-links" id="nav-shared"></ul>
+
+                <div class="sidebar-title">Reference</div>
+                <ul class="nav-links" id="nav-reference"></ul>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <div id="content-container">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Loading documentation…</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <button id="contentsFab" class="contents-fab" type="button">Contents</button>
+
+    <div id="tocOverlay" class="toc-overlay" role="dialog" aria-modal="true" aria-label="On this page">
+        <div class="toc-sheet">
+            <div class="toc-sheet-header">
+                <div class="title">On this page</div>
+                <button id="tocClose" class="close" type="button">Close</button>
+            </div>
+            <div class="toc-sheet-body" id="tocSheetBody"></div>
+        </div>
+    </div>
+
+    <!-- Optional Analytics: Uncomment and replace YOUR-SITE with your GoatCounter site code -->
+    <!-- <script data-goatcounter="https://YOUR-SITE.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script> -->
+
+    <script>
+        // ==============================================================
+        // Feature flags
+        // ==============================================================
+        const SEARCH_ENABLED = true;
+
+        // ==============================================================
+        // Content catalog (kept explicit + simple on purpose)
+        // ==============================================================
+    const DEFAULT_DOC = 'content/shared/start-here.md';
+
+        const DOCS = {
+            start: [
+                { title: 'Start Here', path: 'content/shared/start-here.md' }
+            ],
+            phases: [
+                { title: 'Phase 0 — Foundation', path: 'content/phases/phase-0-foundation.md' },
+                { title: 'Phase 1 — Specification', path: 'content/phases/phase-1-specification.md' },
+                { title: 'Phase 2 — GitHub', path: 'content/phases/phase-2-github.md' },
+                { title: 'Phase 3 — Implementation', path: 'content/phases/phase-3-implementation.md' },
+                { title: 'Phase 4 — Review', path: 'content/phases/phase-4-review.md' },
+                { title: 'Phase 5 — Release', path: 'content/phases/phase-5-release.md' }
+            ],
+            roles: [
+                { title: 'Developer', path: 'content/roles/developer.md' },
+                { title: 'QA', path: 'content/roles/qa.md' },
+                { title: 'Architect', path: 'content/roles/architect.md' },
+                { title: 'Tech Lead', path: 'content/roles/tech-lead.md' }
+            ],
+            shared: [
+                { title: 'Site Map', path: 'content/shared/site-map.md' },
+                { title: 'Quick Reference Card', path: 'content/shared/quick-reference-card.md' },
+                { title: 'Complete Feature Walkthrough', path: 'content/examples/complete-feature-walkthrough.md' },
+                { title: 'Troubleshooting & Emergency Stops', path: 'content/shared/troubleshooting-and-emergency-stops.md' },
+                { title: 'Prompt Library', path: 'content/shared/prompt-library.md' },
+                { title: 'TDD & Coverage', path: 'content/shared/tdd-and-coverage.md' },
+                { title: 'Reviewer Independence', path: 'content/shared/reviewer-independence.md' },
+                { title: 'AI Tools & Setup', path: 'content/shared/ai-tools-and-setup.md' },
+                { title: 'Example Constitution', path: 'content/shared/example-constitution.md' },
+                { title: 'Search', path: 'content/shared/search.md' }
+            ],
+            reference: [
+                { title: 'Original SOP (download)', path: 'AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md', downloadOnly: true },
+                { title: 'Original Quick Reference (download)', path: 'AI-DEV-QUICK-REFERENCE-v1.4.0-FINAL.md', downloadOnly: true }
+            ]
+        };
+
+        // ==============================================================
+        // Marked setup
+        // ==============================================================
+        marked.setOptions({
+            gfm: true,
+            breaks: true,
+            headerIds: true,
+            mangle: false
+        });
+
+        function slugify(text) {
+            return String(text)
+                .normalize('NFKD')                    // normalize unicode
+                .replace(/[\u0300-\u036f]/g, '')      // strip diacritics
+                .toLowerCase()
+                .trim()
+                .replace(/[^\w\s-]/g, '')             // remove non-word chars (including emojis)
+                .replace(/[\s_]+/g, '-')              // spaces/underscores to dashes
+                .replace(/-+/g, '-')                  // collapse multiple dashes
+                .replace(/^-+|-+$/g, '');             // trim leading/trailing dashes
+        }
+
+        function getDocFromUrl() {
+            const params = new URLSearchParams(window.location.search);
+            const doc = params.get('doc');
+            if (doc) return doc;
+            return DEFAULT_DOC;
+        }
+
+        function setDocInUrl(path) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('doc', path);
+            history.pushState({}, '', url);
+        }
+
+        function flattenDocs() {
+            return [...DOCS.phases, ...DOCS.roles, ...DOCS.shared]
+                .map(d => ({ title: d.title, path: d.path }));
+        }
+
+        // GitHub repository URL (change this to your repository)
+        const GITHUB_REPO = 'your-org/ai-dev-guide';
+        const GITHUB_BRANCH = 'main';
+
+        // Get all navigable docs in order
+        function getAllDocs() {
+            return [
+                ...DOCS.start,
+                ...DOCS.phases,
+                ...DOCS.roles,
+                ...DOCS.shared.filter(d => !d.downloadOnly)
+            ];
+        }
+
+        // Get breadcrumb info for a path
+        function getBreadcrumbInfo(path) {
+            const categories = {
+                'content/phases/': { name: 'Phases', link: '?doc=content/phases/phase-0-foundation.md' },
+                'content/roles/': { name: 'Roles', link: '?doc=content/roles/developer.md' },
+                'content/shared/': { name: 'Shared', link: '?doc=content/shared/site-map.md' }
+            };
+
+            for (const [prefix, info] of Object.entries(categories)) {
+                if (path.startsWith(prefix)) {
+                    return info;
+                }
+            }
+            return null;
+        }
+
+        // Get document title from path
+        function getDocTitle(path) {
+            const allDocs = getAllDocs();
+            const doc = allDocs.find(d => d.path === path);
+            return doc ? doc.title : path.split('/').pop().replace('.md', '');
+        }
+
+        // Get prev/next documents
+        function getPrevNextDocs(currentPath) {
+            const allDocs = getAllDocs();
+            const currentIndex = allDocs.findIndex(d => d.path === currentPath);
+
+            if (currentIndex === -1) return { prev: null, next: null };
+
+            const prev = currentIndex > 0 ? allDocs[currentIndex - 1] : null;
+            const next = currentIndex < allDocs.length - 1 ? allDocs[currentIndex + 1] : null;
+
+            return { prev, next };
+        }
+
+        // Render breadcrumbs
+        function renderBreadcrumbs(path) {
+            const category = getBreadcrumbInfo(path);
+            const title = getDocTitle(path);
+
+            let html = `<a href="index.html">Home</a><span class="separator">/</span>`;
+            html += `<a href="docs.html">Docs</a>`;
+
+            if (category) {
+                html += `<span class="separator">/</span><a href="${category.link}">${category.name}</a>`;
+            }
+
+            html += `<span class="separator">/</span><span class="current">${title}</span>`;
+
+            return html;
+        }
+
+        // Render prev/next navigation
+        function renderPageNav(path) {
+            const { prev, next } = getPrevNextDocs(path);
+
+            let html = '';
+
+            if (prev) {
+                html += `
+                    <a href="?doc=${encodeURIComponent(prev.path)}" class="page-nav-link prev">
+                        <span class="page-nav-label">← Previous</span>
+                        <span class="page-nav-title">${prev.title}</span>
+                    </a>
+                `;
+            }
+
+            if (next) {
+                html += `
+                    <a href="?doc=${encodeURIComponent(next.path)}" class="page-nav-link next">
+                        <span class="page-nav-label">Next →</span>
+                        <span class="page-nav-title">${next.title}</span>
+                    </a>
+                `;
+            }
+
+            return html ? `<nav class="page-nav">${html}</nav>` : '';
+        }
+
+        // Render edit link
+        function renderEditLink(path) {
+            const editUrl = `https://github.com/${GITHUB_REPO}/edit/${GITHUB_BRANCH}/${path}`;
+            return `<a href="${editUrl}" target="_blank" rel="noopener" class="edit-link">Edit this page on GitHub</a>`;
+        }
+
+        function renderNavList(targetId, items) {
+            const el = document.getElementById(targetId);
+            el.innerHTML = items
+                .map(i => {
+                    const href = i.downloadOnly
+                        ? i.path
+                        : `?doc=${encodeURIComponent(i.path)}`;
+
+                    const extra = i.downloadOnly ? ' download' : '';
+
+                    return `<li><a class="nav-item" href="${href}"${extra}>${i.title}</a></li>`;
+                })
+                .join('');
+        }
+
+        function setActiveNav(docPath) {
+            document.querySelectorAll('.nav-item').forEach(a => {
+                a.classList.toggle('active', a.getAttribute('href') === `?doc=${encodeURIComponent(docPath)}`);
+            });
+        }
+
+        function buildTocItems(headers) {
+            // include both H2/H3
+            return headers
+                .filter(h => h.level === 2 || h.level === 3)
+                .map(h => ({
+                    text: h.text,
+                    slug: h.slug,
+                    level: h.level
+                }));
+        }
+
+        function renderInlineToc(containerEl, tocItems) {
+            if (!containerEl) return;
+            if (!tocItems.length) return;
+
+            // Insert right under first H1 if present, otherwise at top.
+            const h1 = containerEl.querySelector('.markdown-body h1');
+            const mountPoint = h1 ? h1.nextElementSibling : containerEl.querySelector('.markdown-body');
+
+            const inner = tocItems
+                .map(i => {
+                    const cls = i.level === 3 ? 'toc-h3' : '';
+                    return `<a class="${cls}" href="#${i.slug}">${i.text}</a>`;
+                })
+                .join('');
+
+            const tocHtml = `
+                <div class="inline-toc" id="inlineToc">
+                    <div class="inline-toc-title">On this page</div>
+                    ${inner}
+                </div>
+            `;
+
+            if (mountPoint) {
+                mountPoint.insertAdjacentHTML('beforebegin', tocHtml);
+            } else {
+                containerEl.insertAdjacentHTML('afterbegin', tocHtml);
+            }
+        }
+
+        function renderTocOverlay(tocItems) {
+            const sheet = document.getElementById('tocSheetBody');
+            if (!sheet) return;
+
+            sheet.innerHTML = tocItems
+                .map(i => {
+                    const cls = i.level === 3 ? 'toc-h3' : '';
+                    return `<a class="${cls}" href="#${i.slug}">${i.text}</a>`;
+                })
+                .join('');
+        }
+
+        function wireContentsOverlay() {
+            const fab = document.getElementById('contentsFab');
+            const overlay = document.getElementById('tocOverlay');
+            const closeBtn = document.getElementById('tocClose');
+
+            if (!fab || !overlay || !closeBtn) return;
+
+            function open() {
+                overlay.style.display = 'flex';
+            }
+
+            function close() {
+                overlay.style.display = 'none';
+            }
+
+            fab.addEventListener('click', open);
+            closeBtn.addEventListener('click', close);
+
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) close();
+            });
+
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') close();
+            });
+
+            // Close overlay when clicking a link inside it
+            overlay.addEventListener('click', (e) => {
+                const a = e.target.closest('a');
+                if (a) close();
+            });
+        }
+
+        function updateContentsFabVisibility(tocItems) {
+            const fab = document.getElementById('contentsFab');
+            if (!fab) return;
+            if (!tocItems.length) {
+                fab.style.display = 'none';
+                return;
+            }
+
+            const y = window.scrollY || document.documentElement.scrollTop || 0;
+            fab.style.display = y > 420 ? 'block' : 'none';
+        }
+
+        function headingTextToPlain(textOrTokens) {
+            // marked versions differ:
+            // - older: renderer.heading(text, level)
+            // - newer: renderer.heading(token) where token.text may be string OR tokens array
+            // If we interpolate objects into a template string, you get "[object Object]".
+            if (typeof textOrTokens === 'string') return textOrTokens;
+
+            if (Array.isArray(textOrTokens)) {
+                return textOrTokens
+                    .map(t => {
+                        if (typeof t === 'string') return t;
+                        if (t && typeof t.text === 'string') return t.text;
+                        return '';
+                    })
+                    .join('');
+            }
+
+            if (textOrTokens && typeof textOrTokens === 'object') {
+                if (typeof textOrTokens.text === 'string') return textOrTokens.text;
+                if (Array.isArray(textOrTokens.tokens)) return headingTextToPlain(textOrTokens.tokens);
+            }
+
+            return '';
+        }
+
+        // ==============================================================
+        // Content loading
+        // ==============================================================
+        async function loadMarkdown(path) {
+            const container = document.getElementById('content-container');
+
+            try {
+                const response = await fetch(path);
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+
+                const text = await response.text();
+
+                const headers = [];
+                const renderer = new marked.Renderer();
+
+                // marked v5+ calls renderer.heading(token). Older versions call (text, level).
+                renderer.heading = function (...args) {
+                    const tokenOrText = args[0];
+                    const level = (typeof args[1] === 'number') ? args[1] : (tokenOrText?.depth ?? 2);
+                    const raw = (typeof args[1] === 'number') ? tokenOrText : (tokenOrText?.text ?? '');
+                    const plain = headingTextToPlain(raw);
+                    const slug = slugify(plain);
+
+                    headers.push({ text: plain, level, slug });
+                    return `<h${level} id="${slug}">${plain}</h${level}>`;
+                };
+
+                marked.use({ renderer });
+
+                // Build page content with navigation
+                const breadcrumbsHtml = renderBreadcrumbs(path);
+                const pageNavHtml = renderPageNav(path);
+                const editLinkHtml = renderEditLink(path);
+
+                container.innerHTML = `
+                    <nav class="breadcrumbs">${breadcrumbsHtml}</nav>
+                    <div class="markdown-body">${marked.parse(text)}</div>
+                    ${editLinkHtml}
+                    ${pageNavHtml}
+                `;
+
+                // Clean up checkboxes list-style
+                document.querySelectorAll('input[type="checkbox"]').forEach(box => {
+                    if (box.parentElement) box.parentElement.style.listStyle = 'none';
+                });
+
+                const tocItems = buildTocItems(headers);
+                renderInlineToc(container, tocItems);
+                renderTocOverlay(tocItems);
+                updateContentsFabVisibility(tocItems);
+
+                setActiveNav(path);
+
+                const dl = document.getElementById('downloadLink');
+                dl.href = path;
+                dl.setAttribute('download', '');
+
+                // Update TOC chip on scroll for this page
+                window.onscroll = () => updateContentsFabVisibility(tocItems);
+
+                // Scroll to top when loading new page
+                window.scrollTo(0, 0);
+
+            } catch (error) {
+                console.error('Error loading markdown:', error);
+                container.innerHTML = `
+                    <div class="error-message">
+                        <h3>⚠️ Content Loading Failed</h3>
+                        <p>Unable to load: <strong>${path}</strong></p>
+                        <br>
+                        <p><strong>If you're opening this via <code>file://</code>:</strong><br>
+                        browsers block fetch. Run a local server.</p>
+                        <br>
+                        <p class="muted">If you already have Node installed, the simplest option is <code>npx serve .</code></p>
+                    </div>
+                `;
+            }
+        }
+
+        // ==============================================================
+        // Search (Option B)
+        // ==============================================================
+        let SEARCH_INDEX = null;
+
+        function showSearchResults(items, query) {
+            const el = document.getElementById('searchResults');
+            if (!items.length || !query) {
+                el.style.display = 'none';
+                el.innerHTML = '';
+                return;
+            }
+
+            const html = items.slice(0, 20).map(r => {
+                const href = `?doc=${encodeURIComponent(r.path)}${r.anchor ? `#${r.anchor}` : ''}`;
+                const snippet = (r.snippet || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                return `
+                    <a href="${href}">
+                        <div class="title">${r.title}</div>
+                        <div class="snippet">${snippet}</div>
+                    </a>
+                `;
+            }).join('');
+
+            el.innerHTML = html;
+            el.style.display = 'block';
+        }
+
+        function searchIndex(query) {
+            if (!SEARCH_INDEX) return [];
+            const q = query.trim().toLowerCase();
+            if (!q) return [];
+
+            // Very small + fast: title match first, then content match.
+            const results = [];
+
+            for (const doc of SEARCH_INDEX.docs) {
+                const titleHit = doc.title.toLowerCase().includes(q);
+
+                let bestSnippet = '';
+                let bestAnchor = '';
+                let contentHit = false;
+
+                for (const chunk of doc.chunks) {
+                    const hay = chunk.text.toLowerCase();
+                    const idx = hay.indexOf(q);
+                    if (idx !== -1) {
+                        contentHit = true;
+                        const start = Math.max(0, idx - 60);
+                        const end = Math.min(chunk.text.length, idx + 120);
+                        bestSnippet = chunk.text.slice(start, end);
+                        bestAnchor = chunk.anchor || '';
+                        break;
+                    }
+                }
+
+                if (titleHit || contentHit) {
+                    results.push({
+                        title: doc.title,
+                        path: doc.path,
+                        anchor: bestAnchor,
+                        snippet: bestSnippet || doc.description || ''
+                    });
+                }
+            }
+
+            return results;
+        }
+
+        async function ensureSearchInitialized() {
+            if (!SEARCH_ENABLED) return;
+
+            const box = document.getElementById('searchBox');
+            box.style.display = 'block';
+
+            if (SEARCH_INDEX) return;
+
+            try {
+                const res = await fetch('search-index.json');
+                if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+                SEARCH_INDEX = await res.json();
+            } catch (e) {
+                console.warn('Search index not available yet:', e);
+                // Keep UI visible but explain why no results show.
+                SEARCH_INDEX = { docs: [] };
+            }
+        }
+
+        function wireSearchUi() {
+            if (!SEARCH_ENABLED) return;
+
+            const input = document.getElementById('searchInput');
+            input.addEventListener('input', () => {
+                const q = input.value;
+                const results = searchIndex(q);
+                showSearchResults(results, q);
+            });
+        }
+
+        // ==============================================================
+        // Bootstrap
+        // ==============================================================
+        function initNav() {
+            renderNavList('nav-start', DOCS.start);
+            renderNavList('nav-phases', DOCS.phases);
+            renderNavList('nav-roles', DOCS.roles);
+            renderNavList('nav-shared', DOCS.shared);
+            renderNavList('nav-reference', DOCS.reference);
+        }
+
+        async function init() {
+            initNav();
+            await ensureSearchInitialized();
+            wireSearchUi();
+            wireContentsOverlay();
+
+            const doc = getDocFromUrl();
+            await loadMarkdown(doc);
+        }
+
+        window.addEventListener('popstate', () => {
+            loadMarkdown(getDocFromUrl());
+        });
+
+        // Handle hash/anchor links - scroll to element manually
+        document.addEventListener('click', (e) => {
+            const a = e.target.closest('a');
+            if (!a) return;
+
+            const href = a.getAttribute('href') || '';
+
+            // Handle anchor links (e.g., #where-to-start)
+            if (href.startsWith('#')) {
+                const targetId = href.slice(1);
+                const targetEl = document.getElementById(targetId);
+                if (targetEl) {
+                    e.preventDefault();
+                    targetEl.scrollIntoView({ behavior: 'smooth' });
+                    history.replaceState(null, '', href);
+                }
+                return;
+            }
+
+            // Handle doc links (e.g., ?doc=content/phases/phase-0.md)
+            if (!href.startsWith('?doc=')) return;
+
+            e.preventDefault();
+            const url = new URL(href, window.location.href);
+            const doc = url.searchParams.get('doc');
+            if (!doc) return;
+
+            setDocInUrl(doc);
+            loadMarkdown(doc);
+        });
+
+        init();
+    </script>
+</body>
+
+</html>

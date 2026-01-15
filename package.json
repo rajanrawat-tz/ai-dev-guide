@@ -1,0 +1,9 @@
+{
+  "name": "ai-dev-guide",
+  "private": true,
+  "version": "1.4.0",
+  "type": "module",
+  "scripts": {
+    "build:search": "node scripts/build-search-index.mjs"
+  }
+}
