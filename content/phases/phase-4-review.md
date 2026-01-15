@@ -1,6 +1,4 @@
-# Phase 4: Multi-Model Review & Verification
-
-**Source of truth**: `AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md` (Phase 4 section)
+# Phase 4: Multi-AI Review & Refinement
 
 ---
 

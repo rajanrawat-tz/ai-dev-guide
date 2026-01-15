@@ -1,6 +1,4 @@
-# Phase 1: Specification & Planning
-
-**Source of truth**: `AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md` (Phase 1 section)
+# Phase 1: Specification & Design
 
 ---
 

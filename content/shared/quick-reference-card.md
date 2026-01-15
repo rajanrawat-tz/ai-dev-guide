@@ -1,7 +1,5 @@
 # Quick Reference Card (Canonical Content)
 
-**Source of truth**: `AI-DEV-QUICK-REFERENCE-v1.4.0-FINAL.md`
-
 This page intentionally mirrors the content of the printable quick reference card.
 If you update this content, also update the printable HTML page and/or the original markdown.
 

@@ -1,7 +1,5 @@
 # Phase 0: Foundation & Context Setup
 
-**Source of truth**: `AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md` (Phase 0 section)
-
 ---
 
 ## Objective

@@ -1,7 +1,5 @@
 # Phase 3: Implementation
 
-**Source of truth**: `AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md` (Phase 3 section)
-
 ---
 
 ## Objective

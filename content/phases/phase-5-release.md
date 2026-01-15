@@ -1,7 +1,5 @@
 # Phase 5: Pull Request & Release
 
-**Source of truth**: `AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md` (Phase 5 section)
-
 ---
 
 ## Objective

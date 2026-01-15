@@ -1,7 +1,5 @@
 # Phase 2: GitHub Issue Creation & Hierarchy
 
-**Source of truth**: `AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md` (Phase 2 section)
-
 ---
 
 ## Objective
@@ -34,7 +32,114 @@ Epic: "Customer Authentication System"
 
 ---
 
-## Step 2.1: Create Epic (If Needed)
+## 🚀 AI-Assisted Workflow (RECOMMENDED)
+
+**For teams using AI agents with Speckit**, this bottom-up approach is faster and more practical:
+
+### Step 2.1: Auto-Create Tasks from Specification
+
+Since you already have detailed `tasks.md` from Phase 1, use Speckit to create all task issues at once:
+
+```bash
+# In your AI chat (Cursor, Windsurf, etc.)
+/speckit.taskstoissues
+
+# Speckit will automatically:
+# ✅ Read your tasks.md file
+# ✅ Create individual task issues in GitHub
+# ✅ Add appropriate labels (task, TDD, etc.)
+# ✅ Include test-first requirements
+# ✅ Link to task document sections
+```
+
+**Output**: You now have all task issues created (e.g., #125, #126, #127, #128)
+
+---
+
+### Step 2.2: Create User Story and Link Tasks
+
+Prompt your AI agent to create the User Story issue and establish parent-child relationships:
+
+**AI Prompt:**
+```
+Create a GitHub User Story issue for [feature name] with:
+- Title: "US-XX: [User Story Title from spec.md]"
+- Body including: user story, acceptance criteria, technical context
+- Labels: user-story, feature
+- Link tasks #125, #126, #127, #128 as child issues
+- Assign to @me
+- Add to milestone [Sprint/Milestone name]
+```
+
+**AI will execute:**
+```bash
+gh issue create \
+  --title "US-01: User Login with Email/Password" \
+  --body "[full description with acceptance criteria]" \
+  --label "user-story,feature" \
+  --assignee "@me" \
+  --milestone "Sprint 5"
+
+# Then link child tasks in GitHub Projects
+# (AI can use GitHub API or gh CLI to set parent-child relationships)
+```
+
+**Output**: User Story issue #124 created with tasks #125-128 as children
+
+---
+
+### Step 2.3: Create Epic (If Needed) and Link User Stories
+
+For larger features spanning multiple user stories, create an Epic:
+
+**AI Prompt:**
+```
+Create a GitHub Epic issue for [initiative name] with:
+- Title: "Epic: [Initiative Name]"
+- Body including: overview, user stories checklist, success metrics
+- Labels: epic
+- Link User Stories #124, #130, #135 as children
+- Add to milestone [Milestone name]
+```
+
+**Output**: Epic issue #123 created with User Stories as children
+
+---
+
+### Step 2.4: Verify Hierarchy in GitHub Projects
+
+Check that the hierarchy is correctly established:
+
+```
+Epic: Customer Authentication System (#123)
+  └─ US-01: User Login with Email/Password (#124)
+      ├─ Task: Create login API endpoint (#125)
+      ├─ Task: Implement JWT token generation (#126)
+      ├─ Task: Add password hashing (#127)
+      └─ Task: Write integration tests (#128)
+```
+
+**Using GitHub CLI:**
+```bash
+# View User Story with children
+gh issue view 124
+
+# List all tasks for this user story
+gh issue list --search "parent:US-01 in:title"
+```
+
+**In GitHub Projects UI:**
+- Epic shows progress rollup from User Stories
+- User Stories show progress rollup from Tasks
+- Parent-child links are visible
+
+---
+
+## 📋 Manual Workflow (Alternative)
+
+**For teams not using AI agents**, follow the traditional top-down approach:
+
+### Manual Step 2.1: Create Epic (If Needed)
 
 **When to create an Epic:**
 - Multiple related user stories
@@ -71,24 +176,10 @@ Expected completion: [Date]
 
 ---
 
-## Step 2.2: Create User Story Issue
+### Manual Step 2.2: Create User Story Issue
 
 **For each user story in your Feature Specification:**
 
-### Using Speckit (Recommended)
-```
-/speckit.taskstoissues
-
-# Speckit will:
-# - Create User Story issue from spec.md
-# - Create Task issues from tasks.md
-# - Link tasks to user story (parent-child)
-# - Link user story to epic (if specified)
-# - Add proper labels (feature, TDD, etc.)
-# - Add milestone and assignees
-```
-
-### Manual Alternative
 ```bash
 # Create User Story issue
 gh issue create \
@@ -123,7 +214,7 @@ Relates to: #[epic-issue-number]" \
 
 ---
 
-## Step 2.3: Create Task Issues (Children of User Story)
+### Manual Step 2.3: Create Task Issues (Children of User Story)
 
 **For each task in your tasks document:**
 
@@ -170,7 +261,9 @@ gh project item-add [project-number] --owner [org] --url [task-issue-url]
 
 ---
 
-## Step 2.4: Verify Issue Hierarchy
+## Common Steps (Both Workflows)
+
+### Step 2.4: Verify Issue Hierarchy
 
 **Check your hierarchy is correct:**
 
@@ -200,7 +293,7 @@ gh issue view [user-story-number] --json title,body,labels
 
 ---
 
-## Step 2.5: Set Up Task Board View
+### Step 2.5: Set Up Task Board View
 
 **In GitHub Projects:**
 
@@ -224,7 +317,7 @@ gh issue view [user-story-number] --json title,body,labels
 
 ---
 
-## Step 2.6: Create Feature Branch
+### Step 2.6: Create Feature Branch
 
 ```bash
 # Naming convention: [story-id]-[short-description]
@@ -239,7 +332,7 @@ git push -u origin US-XX-feature-name
 
 ---
 
-## Step 2.7: Assign Work
+### Step 2.7: Assign Work
 
 **For team development:**
 

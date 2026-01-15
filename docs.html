@@ -876,7 +876,7 @@
         }
 
         // GitHub repository URL (change this to your repository)
-        const GITHUB_REPO = 'your-org/ai-dev-guide';
+        const GITHUB_REPO = 'rajanrawat-tz/ai-dev-guide';
         const GITHUB_BRANCH = 'main';
 
         // Get all navigable docs in order
@@ -1172,8 +1172,15 @@
                 setActiveNav(path);
 
                 const dl = document.getElementById('downloadLink');
-                dl.href = path;
-                dl.setAttribute('download', '');
+                // Only show download button for actual MD files (not rendered content pages)
+                // Hide for individual content pages from /content/ folder
+                if (path.startsWith('content/')) {
+                    dl.style.display = 'none';
+                } else {
+                    dl.style.display = 'inline-flex';
+                    dl.href = path;
+                    dl.setAttribute('download', '');
+                }
 
                 // Update TOC chip on scroll for this page
                 window.onscroll = () => updateContentsFabVisibility(tocItems);
