@@ -33,7 +33,7 @@ If Speckit is unavailable, you can follow the manual prompts provided in [Phase 
 ### Recommended (after 1 month)
 - add a code quality tool (e.g., Sourcery/SonarLint)
 
-### Advanced (成熟 teams)
+### Advanced (Experienced teams)
 - add security scanning and PR auto-review
 
 ---
