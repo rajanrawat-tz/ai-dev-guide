@@ -1,9 +1,5 @@
 # Reviewer Independence Rule
 
-**Sources of truth**:
-- `AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md` (Phase 4)
-- `AI-DEV-QUICK-REFERENCE-v1.4.0-FINAL.md` (Reviewer Independence section)
-
 ---
 
 ## The rule

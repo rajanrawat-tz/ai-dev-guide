@@ -1,9 +1,5 @@
 # AI Tools Ecosystem & Setup
 
-**Sources of truth**:
-- `AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md` → "AI Review Tools Setup"
-- `AI-DEV-QUICK-REFERENCE-v1.4.0-FINAL.md` → AI tool comparison + experience-level recommendations
-
 ---
 
 ## Speckit (Specification Tool)

@@ -1,9 +1,5 @@
 # TDD & Coverage Policy
 
-**Sources of truth**:
-- `AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md` (Phase 3 + gates)
-- `AI-DEV-QUICK-REFERENCE-v1.4.0-FINAL.md` (TDD Workflow + Checkpoint Gates)
-
 ---
 
 ## The rule

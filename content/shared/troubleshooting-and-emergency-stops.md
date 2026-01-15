@@ -1,9 +1,5 @@
 # Common Situations, Troubleshooting & Emergency Stops
 
-**Sources of truth**:
-- `AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md` → “Common Situations & Troubleshooting” + “Emergency Stops ⛔”
-- `AI-DEV-QUICK-REFERENCE-v1.4.0-FINAL.md` → “Common Situations & Quick Actions” + “Emergency Stops ⛔”
-
 ---
 
 ## Common Situations & Troubleshooting

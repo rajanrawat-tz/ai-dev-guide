@@ -1,9 +1,5 @@
 # Prompt Library (Copy/Paste)
 
-**Sources of truth**:
-- `AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md` → “Common Prompts Reference”
-- `AI-DEV-QUICK-REFERENCE-v1.4.0-FINAL.md` → “Common Prompts (Copy-Paste Ready)” + other embedded prompts
-
 ---
 
 ## Research / Pre-Implementation
