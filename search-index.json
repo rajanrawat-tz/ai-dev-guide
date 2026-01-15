@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "generatedAt": "2026-01-14T14:45:17.129Z",
+  "generatedAt": "2026-01-15T08:55:36.749Z",
   "docs": [
     {
       "title": "Complete Feature Walkthrough",
@@ -20,12 +20,12 @@
         {
           "heading": "Phase 0: Foundation (30-45 minutes)",
           "anchor": "phase-0-foundation-30-45-minutes",
-          "text": "Step 0.1: Understand Requirements Read the user story and acceptance criteria carefully. Note: This involves user authentication (security-sensitive) File upload handling Email verification flow Step 0.2: Review Constitution Check your project's constitution for relevant rules: Step 0.3: Pre-Implementation Research Prompt **AI Response Summary** (example): User model at src/models/User.ts Auth middleware at src/middleware/auth.ts No file upload yet - will need S3 integration Validation uses Zod schemas in src/schemas/ Checkpoint 0 [x] User story and acceptance criteria understood [x] Constitution reviewed (API, security, validation sections) [x] Existing codebase analyzed [x] Dependencies identified (S3 for file upload) [x] No blockers identified ---"
+          "text": "**Canonical Phase Doc:** Phase 0: Foundation & Context Setup Step 0.1: Understand Requirements Read the user story and acceptance criteria carefully. Note: This involves user authentication (security-sensitive) File upload handling Email verification flow Step 0.2: Review Constitution Check your project's constitution for relevant rules: Step 0.3: Pre-Implementation Research Prompt **AI Response Summary** (example): User model at src/models/User.ts Auth middleware at src/middleware/auth.ts No file upload yet - will need S3 integration Validation uses Zod schemas in src/schemas/ Checkpoint 0 [x] User story and acceptance criteria understood [x] Constitution reviewed (API, security, validation sections) [x] Existing codebase analyzed [x] Dependencies identified (S3 for file upload) [x] No blockers identified ---"
         },
         {
           "heading": "Phase 1: Specification (45-60 minutes)",
           "anchor": "phase-1-specification-45-60-minutes",
-          "text": "Step 1.1: Generate Specification Using Speckit (or manual prompt): Generated Specification (summarized) ```markdown US-042: User Profile Edit"
+          "text": "**Canonical Phase Doc:** Phase 1: Specification & Design Step 1.1: Generate Specification Using Speckit (or manual prompt): Generated Specification (summarized) ```markdown US-042: User Profile Edit"
         },
         {
           "heading": "Technical Requirements",
@@ -35,7 +35,7 @@
         {
           "heading": "Phase 2: GitHub Planning (15-20 minutes)",
           "anchor": "phase-2-github-planning-15-20-minutes",
-          "text": "Step 2.1: Create Parent Issue ```markdown [US-042] User Profile Edit Feature"
+          "text": "**Canonical Phase Doc:** Phase 2: GitHub Issue Creation & Hierarchy This walkthrough previously described a top-down flow (create parent issue → then create tasks). Our recommended Phase 2 flow is now **AI bottom-up**: create tasks first, then create/link the User Story (and Epic if needed). Step 2.1: Create Tasks from tasks.md (Recommended) If you used /speckit.tasks in Phase 1, you should now have a tasks.md artifact. Use Speckit to turn it into GitHub task issues: **Output**: Task issues created in GitHub (e.g., #101 - #108). Step 2.2: Create User Story and Link the Tasks Create a User Story issue (parent), then link the already-created task issues as children. Step 2.3: (Optional) Create an Epic and Link User Stories If this feature is one of multiple related user stories, create an Epic and link your User Story issue under it. Step 2.4: Verify Hierarchy Confirm in GitHub Projects that the hierarchy is correct: --- Manual Alternative (Top-Down) If you're not using Speckit/AI automation, you can still do it top-down: Create the parent User Story issue first. Create task issues and link them to the parent User Story. --- Example: User Story Issue (Parent) ```markdown [US-042] User Profile Edit Feature"
         },
         {
           "heading": "Overview",
@@ -45,7 +45,7 @@
         {
           "heading": "Acceptance Criteria",
           "anchor": "acceptance-criteria",
-          "text": "[ ] User can update display name (2-50 chars) [ ] User can update email (with re-verification) [ ] User can upload avatar (max 2MB, JPG/PNG) [ ] Changes require password confirmation"
+          "text": "[ ] User can update display name (2-50 chars) [ ] User can update email (with re-verification) [ ] User can upload avatar (max 2MB, JPG/PNG) [ ] Changes require current password confirmation"
         },
         {
           "heading": "Technical Approach",
@@ -53,49 +53,29 @@
           "text": "PATCH /api/v1/users/me endpoint S3 integration for avatar storage Email verification flow"
         },
         {
-          "heading": "Tasks",
-          "anchor": "tasks",
+          "heading": "Tasks (link these as child issues)",
+          "anchor": "tasks-link-these-as-child-issues",
           "text": "[ ] #101 - Database migration [ ] #102 - S3 service implementation [ ] #103 - Email verification service [ ] #104 - Validation schemas [ ] #105 - Profile update endpoint [ ] #106 - Avatar upload endpoint [ ] #107 - Email verification endpoint [ ] #108 - Integration tests"
         },
         {
           "heading": "Definition of Done",
           "anchor": "definition-of-done",
-          "text": "[ ] All tasks complete [ ] 80%+ test coverage [ ] Security review passed [ ] Documentation updated markdown [US-042-05] Profile Update Endpoint Parent: #100"
-        },
-        {
-          "heading": "Description",
-          "anchor": "description",
-          "text": "Implement PATCH /api/v1/users/me endpoint for updating profile fields."
-        },
-        {
-          "heading": "TDD Approach",
-          "anchor": "tdd-approach",
-          "text": "Write tests for validation errors Write tests for successful updates Write tests for password verification Implement controller Verify all tests pass"
-        },
-        {
-          "heading": "Acceptance",
-          "anchor": "acceptance",
-          "text": "[ ] Validates display_name length [ ] Validates email format and uniqueness [ ] Requires current_password [ ] Returns 200 with updated user [ ] Returns appropriate errors"
-        },
-        {
-          "heading": "Files",
-          "anchor": "files",
-          "text": "src/controllers/UserController.ts src/schemas/updateProfile.schema.ts tests/controllers/UserController.test.ts ``` Checkpoint 2 [x] Parent issue created with all context [x] Sub-tasks created with TDD workflow [x] Tasks linked to parent [x] Assignees and labels set ---"
+          "text": "[ ] All tasks complete [ ] 80%+ test coverage [ ] Security review passed [ ] Documentation updated `` Checkpoint 2 [x] Tasks created (preferably via /speckit.taskstoissues`) [x] User Story issue created [x] Tasks linked to User Story [x] Assignees and labels set ---"
         },
         {
           "heading": "Phase 3: Implementation (4-6 hours)",
           "anchor": "phase-3-implementation-4-6-hours",
-          "text": "Task #104: Validation Schemas (TDD Example) Step 1: Write Tests First (RED) Run tests: npm test -- updateProfile.schema.test.ts Result: **5 failing tests** (RED) Step 2: Implement to Pass (GREEN) Run tests: npm test -- updateProfile.schema.test.ts Result: **5 passing tests** (GREEN) Step 3: Refactor (CLEAN) Review code for improvements: Error messages are clear Types are exported No duplication No refactoring needed. Step 4: Check Coverage Result: 95% coverage - exceeds 80% threshold. Checkpoint 3 (per task) [x] Tests written first (RED) [x] Implementation passes tests (GREEN) [x] Code refactored if needed (CLEAN) [x] Coverage >= 80% [x] Constitution compliant [x] Self-review complete ---"
+          "text": "**Canonical Phase Doc:** Phase 3: Implementation Task #104: Validation Schemas (TDD Example) Step 1: Write Tests First (RED) Run tests: npm test -- updateProfile.schema.test.ts Result: **5 failing tests** (RED) Step 2: Implement to Pass (GREEN) Run tests: npm test -- updateProfile.schema.test.ts Result: **5 passing tests** (GREEN) Step 3: Refactor (CLEAN) Review code for improvements: Error messages are clear Types are exported No duplication No refactoring needed. Step 4: Check Coverage Result: 95% coverage - exceeds 80% threshold. Checkpoint 3 (per task) [x] Tests written first (RED) [x] Implementation passes tests (GREEN) [x] Code refactored if needed (CLEAN) [x] Coverage >= 80% [x] Constitution compliant [x] Self-review complete ---"
         },
         {
           "heading": "Phase 4: Review (30-45 minutes)",
           "anchor": "phase-4-review-30-45-minutes",
-          "text": "Step 4.1: Multi-Model Review **Model 1: Claude (Generator)** - Already used for implementation **Model 2: GitHub Copilot (Reviewer)** **Review Findings**: Warning: Email uniqueness check has race condition Suggestion: Add database unique constraint Suggestion: Add rate limiting to prevent enumeration Step 4.2: Address Review Findings Step 4.3: Human Review Senior developer reviews: Architecture alignment Business logic correctness Security considerations Checkpoint 4 [x] Different AI model reviewed code [x] All review findings addressed [x] Human review completed [x] All tests still passing [x] Coverage maintained ---"
+          "text": "**Canonical Phase Doc:** Phase 4: Multi-AI Review & Refinement Step 4.1: Multi-Model Review **Model 1: Claude (Generator)** - Already used for implementation **Model 2: GitHub Copilot (Reviewer)** **Review Findings**: Warning: Email uniqueness check has race condition Suggestion: Add database unique constraint Suggestion: Add rate limiting to prevent enumeration Step 4.2: Address Review Findings Step 4.3: Human Review Senior developer reviews: Architecture alignment Business logic correctness Security considerations Checkpoint 4 [x] Different AI model reviewed code [x] All review findings addressed [x] Human review completed [x] All tests still passing [x] Coverage maintained ---"
         },
         {
           "heading": "Phase 5: Release (15-20 minutes)",
           "anchor": "phase-5-release-15-20-minutes",
-          "text": "Step 5.1: Final Verification All checks pass. Step 5.2: Create PR ```markdown [US-042] Implement User Profile Edit"
+          "text": "**Canonical Phase Doc:** Phase 5: PR Creation & Merge Step 5.1: Final Verification All checks pass. Step 5.2: Create PR ```markdown [US-042] Implement User Profile Edit"
         },
         {
           "heading": "Summary",
@@ -142,12 +122,12 @@
     {
       "title": "Phase 0: Foundation & Context Setup",
       "path": "content/phases/phase-0-foundation.md",
-      "description": "Phase 0: Foundation & Context Setup **Source of truth**: AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md (Phase 0 section) ---",
+      "description": "Phase 0: Foundation & Context Setup ---",
       "chunks": [
         {
           "heading": "",
           "anchor": "",
-          "text": "Phase 0: Foundation & Context Setup **Source of truth**: AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md (Phase 0 section) ---"
+          "text": "Phase 0: Foundation & Context Setup ---"
         },
         {
           "heading": "Objective",
@@ -187,14 +167,14 @@
       ]
     },
     {
-      "title": "Phase 1: Specification & Planning",
+      "title": "Phase 1: Specification & Design",
       "path": "content/phases/phase-1-specification.md",
-      "description": "Phase 1: Specification & Planning **Source of truth**: AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md (Phase 1 section) ---",
+      "description": "Phase 1: Specification & Design ---",
       "chunks": [
         {
           "heading": "",
           "anchor": "",
-          "text": "Phase 1: Specification & Planning **Source of truth**: AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md (Phase 1 section) ---"
+          "text": "Phase 1: Specification & Design ---"
         },
         {
           "heading": "Objective",
@@ -241,12 +221,12 @@
     {
       "title": "Phase 2: GitHub Issue Creation & Hierarchy",
       "path": "content/phases/phase-2-github.md",
-      "description": "Phase 2: GitHub Issue Creation & Hierarchy **Source of truth**: AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md (Phase 2 section) ---",
+      "description": "Phase 2: GitHub Issue Creation & Hierarchy ---",
       "chunks": [
         {
           "heading": "",
           "anchor": "",
-          "text": "Phase 2: GitHub Issue Creation & Hierarchy **Source of truth**: AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md (Phase 2 section) ---"
+          "text": "Phase 2: GitHub Issue Creation & Hierarchy ---"
         },
         {
           "heading": "Objective",
@@ -259,9 +239,14 @@
           "text": "GitHub Projects supports a three-level hierarchy that maps to your workflow: **Example:** ---"
         },
         {
-          "heading": "Step 2.1: Create Epic (If Needed)",
-          "anchor": "step-21-create-epic-if-needed",
-          "text": "**When to create an Epic:** Multiple related user stories Large feature set (2+ weeks of work) Cross-team coordination needed **Using GitHub CLI**: ```bash gh issue create \\ --title \"Epic: [Epic Name]\" \\ --body \"## Epic Overview [High-level description of initiative]"
+          "heading": "🚀 AI-Assisted Workflow (RECOMMENDED)",
+          "anchor": "-ai-assisted-workflow-recommended",
+          "text": "**For teams using AI agents with Speckit**, this bottom-up approach is faster and more practical: Step 2.1: Auto-Create Tasks from Specification Since you already have detailed tasks.md from Phase 1, use Speckit to create all task issues at once: **Output**: You now have all task issues created (e.g., #125, #126, #127, #128) --- Step 2.2: Create User Story and Link Tasks Prompt your AI agent to create the User Story issue and establish parent-child relationships: **AI Prompt:** **AI will execute:** **Output**: User Story issue #124 created with tasks #125-128 as children --- Step 2.3: Create Epic (If Needed) and Link User Stories For larger features spanning multiple user stories, create an Epic: **AI Prompt:** **Output**: Epic issue #123 created with User Stories as children --- Step 2.4: Verify Hierarchy in GitHub Projects Check that the hierarchy is correctly established: **Using GitHub CLI:** **In GitHub Projects UI:** Epic shows progress rollup from User Stories User Stories show progress rollup from Tasks Parent-child links are visible ---"
+        },
+        {
+          "heading": "📋 Manual Workflow (Alternative)",
+          "anchor": "-manual-workflow-alternative",
+          "text": "**For teams not using AI agents**, follow the traditional top-down approach: Manual Step 2.1: Create Epic (If Needed) **When to create an Epic:** Multiple related user stories Large feature set (2+ weeks of work) Cross-team coordination needed **Using GitHub CLI**: ```bash gh issue create \\ --title \"Epic: [Epic Name]\" \\ --body \"## Epic Overview [High-level description of initiative]"
         },
         {
           "heading": "User Stories",
@@ -281,12 +266,7 @@
         {
           "heading": "Documentation",
           "anchor": "documentation",
-          "text": "Feature Specification: [link or path] Implementation Guide: [link or path]\" \\ --label \"epic\" \\ --milestone \"[Milestone name]\" ``` **Save the Epic issue number** - you'll reference it in user stories. ---"
-        },
-        {
-          "heading": "Step 2.2: Create User Story Issue",
-          "anchor": "step-22-create-user-story-issue",
-          "text": "**For each user story in your Feature Specification:** Using Speckit (Recommended) Manual Alternative ```bash Create User Story issue gh issue create \\ --title \"US-XX: [User Story Title]\" \\ --body \"## User Story As a [role], I want [capability], so that [benefit]."
+          "text": "Feature Specification: [link or path] Implementation Guide: [link or path]\" \\ --label \"epic\" \\ --milestone \"[Milestone name]\" bash Create User Story issue gh issue create \\ --title \"US-XX: [User Story Title]\" \\ --body \"## User Story As a [role], I want [capability], so that [benefit]."
         },
         {
           "heading": "Acceptance Criteria",
@@ -311,12 +291,7 @@
         {
           "heading": "Parent Epic",
           "anchor": "parent-epic",
-          "text": "Relates to: #[epic-issue-number]\" \\ --label \"user-story,feature\" \\ --milestone \"[Milestone name]\" \\ --assignee \"@me\" ``` **Save the User Story issue number** - you'll reference it in tasks. ---"
-        },
-        {
-          "heading": "Step 2.3: Create Task Issues (Children of User Story)",
-          "anchor": "step-23-create-task-issues-children-of-user-story",
-          "text": "**For each task in your tasks document:** ```bash Create task and link to parent User Story gh issue create \\ --title \"Task: [Task description]\" \\ --body \"## Task Details [Detailed description from tasks.md]"
+          "text": "Relates to: #[epic-issue-number]\" \\ --label \"user-story,feature\" \\ --milestone \"[Milestone name]\" \\ --assignee \"@me\" bash Create task and link to parent User Story gh issue create \\ --title \"Task: [Task description]\" \\ --body \"## Task Details [Detailed description from tasks.md]"
         },
         {
           "heading": "Test File to Create FIRST",
@@ -344,24 +319,9 @@
           "text": "See: [link or path to tasks document] - Task [N]\" \\ --label \"task,TDD\" \\ --assignee \"@me\" bash Add task as child of user story in GitHub Projects gh project item-add [project-number] --owner [org] --url [task-issue-url] Then in GitHub Projects UI: Open the task issue Set \"Parent issue\" field to User Story issue number ``` ---"
         },
         {
-          "heading": "Step 2.4: Verify Issue Hierarchy",
-          "anchor": "step-24-verify-issue-hierarchy",
-          "text": "**Check your hierarchy is correct:** **In GitHub Issues tab:** **In GitHub Projects board:** Epic appears as high-level card User Stories show as children of Epic Tasks show as children of User Story Progress rolls up automatically **Using GitHub CLI to verify**: ---"
-        },
-        {
-          "heading": "Step 2.5: Set Up Task Board View",
-          "anchor": "step-25-set-up-task-board-view",
-          "text": "**In GitHub Projects:** **Create custom fields** (if not already created): Issue Type: Epic / User Story / Task Parent Issue: Link to parent Story Points: Estimation Sprint: Current sprint/iteration **Create filtered views**: **Epic View**: Show only epics with rollup progress **Current Sprint**: Show user stories + tasks for this sprint **My Tasks**: Show tasks assigned to you **Backlog**: Show unassigned user stories **Use GitHub Projects automation**: Auto-assign \"Status: Todo\" when task created Auto-move to \"In Progress\" when branch created Auto-move to \"In Review\" when PR opened Auto-close when PR merged ---"
-        },
-        {
-          "heading": "Step 2.6: Create Feature Branch",
-          "anchor": "step-26-create-feature-branch",
-          "text": "---"
-        },
-        {
-          "heading": "Step 2.7: Assign Work",
-          "anchor": "step-27-assign-work",
-          "text": "**For team development:** --- <a id=\"checkpoint-2\"></a>"
+          "heading": "Common Steps (Both Workflows)",
+          "anchor": "common-steps-both-workflows",
+          "text": "Step 2.4: Verify Issue Hierarchy **Check your hierarchy is correct:** **In GitHub Issues tab:** **In GitHub Projects board:** Epic appears as high-level card User Stories show as children of Epic Tasks show as children of User Story Progress rolls up automatically **Using GitHub CLI to verify**: --- Step 2.5: Set Up Task Board View **In GitHub Projects:** **Create custom fields** (if not already created): Issue Type: Epic / User Story / Task Parent Issue: Link to parent Story Points: Estimation Sprint: Current sprint/iteration **Create filtered views**: **Epic View**: Show only epics with rollup progress **Current Sprint**: Show user stories + tasks for this sprint **My Tasks**: Show tasks assigned to you **Backlog**: Show unassigned user stories **Use GitHub Projects automation**: Auto-assign \"Status: Todo\" when task created Auto-move to \"In Progress\" when branch created Auto-move to \"In Review\" when PR opened Auto-close when PR merged --- Step 2.6: Create Feature Branch --- Step 2.7: Assign Work **For team development:** --- <a id=\"checkpoint-2\"></a>"
         },
         {
           "heading": "Checkpoint 2 (GATE)",
@@ -443,12 +403,12 @@
     {
       "title": "Phase 3: Implementation",
       "path": "content/phases/phase-3-implementation.md",
-      "description": "Phase 3: Implementation **Source of truth**: AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md (Phase 3 section) ---",
+      "description": "Phase 3: Implementation ---",
       "chunks": [
         {
           "heading": "",
           "anchor": "",
-          "text": "Phase 3: Implementation **Source of truth**: AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md (Phase 3 section) ---"
+          "text": "Phase 3: Implementation ---"
         },
         {
           "heading": "Objective",
@@ -498,14 +458,14 @@
       ]
     },
     {
-      "title": "Phase 4: Multi-Model Review & Verification",
+      "title": "Phase 4: Multi-AI Review & Refinement",
       "path": "content/phases/phase-4-review.md",
-      "description": "Phase 4: Multi-Model Review & Verification **Source of truth**: AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md (Phase 4 section) ---",
+      "description": "Phase 4: Multi-AI Review & Refinement ---",
       "chunks": [
         {
           "heading": "",
           "anchor": "",
-          "text": "Phase 4: Multi-Model Review & Verification **Source of truth**: AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md (Phase 4 section) ---"
+          "text": "Phase 4: Multi-AI Review & Refinement ---"
         },
         {
           "heading": "Objective",
@@ -582,12 +542,12 @@
     {
       "title": "Phase 5: Pull Request & Release",
       "path": "content/phases/phase-5-release.md",
-      "description": "Phase 5: Pull Request & Release **Source of truth**: AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md (Phase 5 section) ---",
+      "description": "Phase 5: Pull Request & Release ---",
       "chunks": [
         {
           "heading": "",
           "anchor": "",
-          "text": "Phase 5: Pull Request & Release **Source of truth**: AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md (Phase 5 section) ---"
+          "text": "Phase 5: Pull Request & Release ---"
         },
         {
           "heading": "Objective",
@@ -842,12 +802,12 @@
     {
       "title": "AI Tools Ecosystem & Setup",
       "path": "content/shared/ai-tools-and-setup.md",
-      "description": "AI Tools Ecosystem & Setup **Sources of truth**: AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md → \"AI Review Tools Setup\" AI-DEV-QUICK-REFERENCE-v1.4.0-FINAL.md → AI tool comparison + experien",
+      "description": "AI Tools Ecosystem & Setup ---",
       "chunks": [
         {
           "heading": "",
           "anchor": "",
-          "text": "AI Tools Ecosystem & Setup **Sources of truth**: AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md → \"AI Review Tools Setup\" AI-DEV-QUICK-REFERENCE-v1.4.0-FINAL.md → AI tool comparison + experience-level recommendations ---"
+          "text": "AI Tools Ecosystem & Setup ---"
         },
         {
           "heading": "Speckit (Specification Tool)",
@@ -961,12 +921,12 @@
     {
       "title": "Prompt Library (Copy/Paste)",
       "path": "content/shared/prompt-library.md",
-      "description": "Prompt Library (Copy/Paste) **Sources of truth**: AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md → “Common Prompts Reference” AI-DEV-QUICK-REFERENCE-v1.4.0-FINAL.md → “Common Prompts (Copy-Pas",
+      "description": "Prompt Library (Copy/Paste) ---",
       "chunks": [
         {
           "heading": "",
           "anchor": "",
-          "text": "Prompt Library (Copy/Paste) **Sources of truth**: AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md → “Common Prompts Reference” AI-DEV-QUICK-REFERENCE-v1.4.0-FINAL.md → “Common Prompts (Copy-Paste Ready)” + other embedded prompts ---"
+          "text": "Prompt Library (Copy/Paste) ---"
         },
         {
           "heading": "Research / Pre-Implementation",
@@ -1011,146 +971,14 @@
       ]
     },
     {
-      "title": "Quick Reference Card (Canonical Content)",
-      "path": "content/shared/quick-reference-card.md",
-      "description": "Quick Reference Card (Canonical Content) **Source of truth**: AI-DEV-QUICK-REFERENCE-v1.4.0-FINAL.md This page intentionally mirrors the content of the printable quick reference ca",
-      "chunks": [
-        {
-          "heading": "",
-          "anchor": "",
-          "text": "Quick Reference Card (Canonical Content) **Source of truth**: AI-DEV-QUICK-REFERENCE-v1.4.0-FINAL.md This page intentionally mirrors the content of the printable quick reference card. If you update this content, also update the printable HTML page and/or the original markdown. ---"
-        },
-        {
-          "heading": "🎯 Quick Navigation",
-          "anchor": "-quick-navigation",
-          "text": "**🟢 NEW TO AI DEV?** Start with these sections: Core Documents (this page) Development Flow (this page) TDD Workflow (page 2) Daily Commands (page 2) **🟡 AFTER 5 FEATURES?** Focus on: Speckit Commands Common Prompts Emergency Stops **🔴 EMERGENCY?** Jump to: Emergency Stops (page 2) Common Situations (page 2) ---"
-        },
-        {
-          "heading": "Phase 0: Creating Foundation Documents",
-          "anchor": "phase-0-creating-foundation-documents",
-          "text": "From PRD to Feature Specification From Feature Specification to Implementation Guide ---"
-        },
-        {
-          "heading": "Speckit Commands",
-          "anchor": "speckit-commands",
-          "text": "| Command | When to Use | Junior-Friendly? | |---------|-------------|------------------| | /speckit.constitution | Create/update project rules | ⚠️ Advanced (ask senior) | | /speckit.specify | Generate feature spec from story | ✅ **Start here** | | /speckit.clarify | Ask clarifying questions about spec | ✅ **Use liberally** | | /speckit.plan | Create implementation plan | ✅ After spec done | | /speckit.tasks | Generate task breakdown | ✅ After plan approved | | /speckit.analyze | Cross-check spec/plan/tasks | ✅ Before Phase 2 | | /speckit.checklist | Generate requirements checklist | ✅ Optional validation | | /speckit.implement | Execute implementation | ⚠️ Rarely used | | /speckit.taskstoissues | Convert tasks to GitHub issues | ✅ Start of Phase 2 | **No Speckit access?** Use manual templates in your project's templates directory and get senior review before implementing. ---"
-        },
-        {
-          "heading": "Development Flow (5 Phases)",
-          "anchor": "development-flow-5-phases",
-          "text": "**First feature**: ~12 hours total | **After 5 features**: ~6 hours total **Note**: FS = Feature Specification, IG = Implementation Guide ---"
-        },
-        {
-          "heading": "Core Documents",
-          "anchor": "core-documents",
-          "text": "| Doc | Typical Location | Use For | Can I Skip? | |-----|----------|---------|-------------| | **PRD** | Project-specific | Requirements from stakeholders | ❌ Never | | **Feature Specification** | Project root or docs/ | User stories, acceptance criteria | ❌ Never | | **Implementation Guide** | Project root or docs/ | Patterns & code examples | After 5 features | | **Constitution** | Project-specific (varies) | Technical constraints | ❌ Never | **Note**: Ask your team lead for exact document locations in your project. ---"
-        },
-        {
-          "heading": "REVIEWER INDEPENDENCE RULE ⚠️",
-          "anchor": "reviewer-independence-rule-",
-          "text": "**Track your chain in PR description:** ```markdown"
-        },
-        {
-          "heading": "AI Tool Chain",
-          "anchor": "ai-tool-chain",
-          "text": "Generated by: _________ Reviewed by: _________, _________ ``` **Why this matters**: Same AI has same blind spots. Different models catch 40% more bugs. ---"
-        },
-        {
-          "heading": "AI Review Tools by Experience Level",
-          "anchor": "ai-review-tools-by-experience-level",
-          "text": "Month 1-2 (Start Simple) **Use These:** ✅ **One AI coding assistant** (pick Claude OR Copilot) ✅ **ESLint/Prettier** (style & standards) ✅ **Different AI for review** (if Claude codes, Copilot reviews) Month 3-6 (Add Static Analysis) **Add These:** ✅ **Sourcery** - Automated code quality ✅ **SonarLint** - Bug detection ✅ Keep using different AI for reviews Month 6+ (Full Toolkit) **Add Advanced:** ✅ **Antigravity** - Architecture & security ✅ **CodeRabbit** - Auto PR review ✅ **SonarQube** - Full project analysis Tool Comparison | Tool | Type | Best For | When to Use | |------|------|----------|-------------| | **Sourcery** | Static | Code quality, refactoring | Every PR | | **ESLint** | Static | Style, standards | Every commit | | **Antigravity** | AI | Architecture, security | Complex features | | **Claude** | LLM | Deep analysis, constitution | Code generation & review | | **Copilot** | LLM | Quick fixes, inline help | Code generation & review | | **Cursor** | LLM IDE | Full-file review, editing | Code generation & review | | **CodeRabbit** | AI | PR auto-review | Every PR (if installed) | | **SonarQube** | Static | Bugs, vulnerabilities, debt | Weekly/release | | **DeepSource** | Static | Multi-language, auto-fix | CI pipeline | ---"
-        },
-        {
-          "heading": "TDD Workflow (MANDATORY) 🔴",
-          "anchor": "tdd-workflow-mandatory-",
-          "text": "**NEVER write implementation before test!** **Why TDD is mandatory:** ✅ AI code has hidden edge cases ✅ Tests prove code works before PR ✅ Prevents 80% of production bugs ✅ Refactoring is safe with test coverage **Coverage requirement**: >= 80% (no exceptions) ---"
-        },
-        {
-          "heading": "Constitution Quick Check",
-          "anchor": "constitution-quick-check",
-          "text": "**Before implementing, verify against YOUR constitution:** This is a template - your project's constitution will have specific technical principles. **Example areas your constitution should cover:** ✅ **Stack**: Your approved tech stack and versions ✅ **Architecture**: Your patterns (microservices, monolith, etc.) ✅ **TDD**: Tests FIRST, coverage minimum ✅ **Data Handling**: Data retention, privacy, compliance ✅ **Persistence**: Database strategy, caching approach ✅ **APIs/Messaging**: REST/GraphQL/event patterns ✅ **Config**: Configuration management approach ✅ **Containers**: Docker/Kubernetes requirements ✅ **Testing**: Unit, integration, e2e requirements ✅ **Observability**: Logging, metrics, monitoring **Don't memorize** - Check your constitution document every feature. **Path varies by project** - Ask your team lead for location. ---"
-        },
-        {
-          "heading": "Checkpoint Gates (Don't Skip These!)",
-          "anchor": "checkpoint-gates-dont-skip-these",
-          "text": "Phase 0 (Foundation) [ ] PRD understood [ ] Feature Specification exists (or created) [ ] Implementation Guide exists (or created) [ ] Constitution read Phase 1 (Specification) [ ] spec.md complete & clear [ ] plan.md has constitution check [ ] tasks.md has TDD tasks [ ] /speckit.analyze passes (or manual review complete) Phase 2 (GitHub Issues) [ ] Epic created (if applicable) [ ] User Story issue created [ ] All task issues created [ ] **Hierarchy set**: Epic → US → Tasks [ ] Feature branch created [ ] Issues assigned to team members Phase 3 (Implementation) [ ] All tests pass [ ] Coverage >= 80% [ ] Docker tests work [ ] Docs updated [ ] **quickstart.md created** [ ] Constitution compliant Phase 4 (Review) [ ] Different AI model reviewed code [ ] 2+ automated tools ran [ ] All critical issues fixed [ ] PR checklist complete ---"
-        },
-        {
-          "heading": "Common Prompts (Copy-Paste Ready)",
-          "anchor": "common-prompts-copy-paste-ready",
-          "text": "Research Phase Start New Feature TDD Implementation Code Review (Different Model) ---"
-        },
-        {
-          "heading": "Common Situations & Quick Actions",
-          "anchor": "common-situations-quick-actions",
-          "text": "| Situation | Quick Action | |-----------|--------------| | 🐛 **Bug in production** | Create issue → Write failing test → Fix → PR | | ❓ **Spec unclear** | /speckit.clarify → Update spec → Get confirmation | | 🚫 **Constitution blocks approach** | Document → Discuss with lead → ADR if needed | | 🤔 **AI code looks wrong** | **Trust your instincts** → Check constitution → Different AI review → Ask senior | | 💤 **Speckit down** | Use templates → Manual spec → Senior review before Phase 2 | | ⏰ **Tests take too long** | **Don't skip** → Start with critical path → Add edge cases incrementally | | 🚧 **Blocked by dependency** | Update issue → Work on parallel tasks → Create mocks for testing | | 🌙 **Working after hours** | Check constitution → Use /speckit.clarify (async) → Post in team chat → Document blockers | ---"
-        },
-        {
-          "heading": "Emergency Stops ⛔",
-          "anchor": "emergency-stops-",
-          "text": "**STOP IMMEDIATELY IF:** ❌ Constitution check fails → Escalate to tech lead ❌ Can't write test first → Requirements unclear, /speckit.clarify ❌ Security issue found → Fix before proceeding ❌ Coverage < 80% → Write more tests ❌ Same AI reviewing its own code → Use different model ❌ Docker tests fail → Debug before PR **ESCALATE TO:** Tech lead for architecture decisions Create ADR if constitution change needed Senior developer if stuck > 2 hours ---"
-        },
-        {
-          "heading": "Daily Commands",
-          "anchor": "daily-commands",
-          "text": "Morning Start New Work During Development End of Day Code Review Create PR ---"
-        },
-        {
-          "heading": "File Structure",
-          "anchor": "file-structure",
-          "text": "**Note**: Structure may vary by project. Common pattern: ---"
-        },
-        {
-          "heading": "Time Expectations (Medium Feature)",
-          "anchor": "time-expectations-medium-feature",
-          "text": "Your First Feature (Learning) **Phase 0**: 60 min **Phase 1**: 90 min **Phase 2**: 15 min **Phase 3**: 8 hours (includes learning) **Phase 4**: 2 hours **Phase 5**: 30 min **TOTAL**: ~12 hours After 5 Features (Proficient) **Phase 0**: 30 min **Phase 1**: 45 min **Phase 2**: 10 min **Phase 3**: 4 hours **Phase 4**: 1 hour **Phase 5**: 20 min **TOTAL**: ~6 hours **Why it gets faster**: Muscle memory, pattern recognition, tool familiarity ---"
-        },
-        {
-          "heading": "Progressive Usage Guide",
-          "anchor": "progressive-usage-guide",
-          "text": "Features 1-2 (Read Everything) ✅ Read full SOP sections ✅ Use every prompt exactly ✅ Check every checkpoint ✅ Pair with senior developer ✅ Ask questions freely Features 3-5 (Reference Mode) ✅ Jump to relevant sections ✅ Adapt prompts to your style ✅ Trust judgment on checkpoints ✅ Consult Implementation Guide less often Features 6+ (Expert Mode) ✅ Use this Quick Ref primarily ✅ Consult SOP for edge cases ✅ Customize prompts heavily ✅ Mentor newer developers ---"
-        },
-        {
-          "heading": "What Makes AI Development Different",
-          "anchor": "what-makes-ai-development-different",
-          "text": "| Aspect | Traditional | AI-Assisted | |--------|-------------|-------------| | **Speed** | Steady | Fast generation | | **Specs** | Nice to have | **Mandatory** | | **Testing** | When convenient | **TDD required** | | **Review** | 1 human | Multiple AI + humans | | **Docs** | After code | During code | **Key insight**: AI is fast at generating → Invest time in specs & tests upfront ---"
-        },
-        {
-          "heading": "If You're Stuck",
-          "anchor": "if-youre-stuck",
-          "text": "**2-minute rule**: Try to solve yourself for 2 minutes **15-minute rule**: If stuck > 15 min, ask for help **2-hour rule**: If stuck > 2 hours, escalate to senior/lead **Where to get help:** 📖 Check constitution & implementation guide 🤖 Ask different AI model for perspective 💬 Post in team chat 👥 Pair with senior developer 📝 Create ADR if architecture question ---"
-        },
-        {
-          "heading": "Red Flags (Call for Help)",
-          "anchor": "red-flags-call-for-help",
-          "text": "🚩 Writing code before tests 🚩 Same AI generating + reviewing 🚩 Coverage < 80% \"just this once\" 🚩 \"I'll add tests later\" 🚩 Constitution violation \"necessary for this feature\" 🚩 Skipping Docker testing 🚩 Stuck on same issue > 2 hours **If you see these in your workflow → PAUSE and get help** ---"
-        },
-        {
-          "heading": "Success Metrics (After 5 Features, You Should...)",
-          "anchor": "success-metrics-after-5-features-you-should",
-          "text": "✅ Generate specs in < 1 hour ✅ Write tests before implementation naturally ✅ Know constitution patterns by memory ✅ Use different AI for reviews automatically ✅ Complete features in ~6 hours ✅ Rarely fail checkpoints ✅ Help newer developers with questions ---"
-        },
-        {
-          "heading": "Remember",
-          "anchor": "remember",
-          "text": "**This process exists to help you ship better code faster.** 📝 Specs prevent rework 🧪 Tests catch bugs early 🔄 Multiple AIs catch more issues 📚 Constitution keeps architecture consistent ⏱️ Upfront investment saves debugging time **After a few features, this becomes natural muscle memory.** ---"
-        },
-        {
-          "heading": "Version History",
-          "anchor": "version-history",
-          "text": "| Version | Date | Changes | |---------|------|---------| | 1.4.0 | 2026-01-13 | **PRODUCTION READY**: Removed placeholders, added path clarifications, standardized references, added language-specific test commands | | 1.3.0 | 2026-01-13 | **Terminology Update**: \"Feature Specification\" and \"Implementation Guide\" for industry clarity | | 1.2.0 | 2026-01-13 | **Genericized**: Removed domain-specific references; generic Story ID format | | 1.1.0 | 2026-01-13 | Added navigation markers, experience levels, time expectations, progressive usage | | 1.0.0 | 2026-01-13 | Initial quick reference | --- **Full SOP**: See your project's documentation folder **Questions**: Ask in team chat **Feedback**: Create issue with suggested improvements --- **Happy coding! Remember: Test first, review with different AI, trust your instincts.** 🚀"
-        }
-      ]
-    },
-    {
       "title": "Reviewer Independence Rule",
       "path": "content/shared/reviewer-independence.md",
-      "description": "Reviewer Independence Rule **Sources of truth**: AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md (Phase 4) AI-DEV-QUICK-REFERENCE-v1.4.0-FINAL.md (Reviewer Independence section) ---",
+      "description": "Reviewer Independence Rule ---",
       "chunks": [
         {
           "heading": "",
           "anchor": "",
-          "text": "Reviewer Independence Rule **Sources of truth**: AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md (Phase 4) AI-DEV-QUICK-REFERENCE-v1.4.0-FINAL.md (Reviewer Independence section) ---"
+          "text": "Reviewer Independence Rule ---"
         },
         {
           "heading": "The rule",
@@ -1241,12 +1069,17 @@
     {
       "title": "Start Here",
       "path": "content/shared/start-here.md",
-      "description": "Start Here Welcome to the AI Development Guide. This is the quickest, safest way to get started. Stay on the phase gates, and use the checkpoints to avoid rework.",
+      "description": "Start Here Welcome to the AI Development Playbook. This is the quickest, safest way to get started with AI-assisted development.",
       "chunks": [
         {
           "heading": "",
           "anchor": "",
-          "text": "Start Here Welcome to the AI Development Guide. This is the quickest, safest way to get started. Stay on the phase gates, and use the checkpoints to avoid rework."
+          "text": "Start Here Welcome to the AI Development Playbook. This is the quickest, safest way to get started with AI-assisted development."
+        },
+        {
+          "heading": "Where to Start",
+          "anchor": "where-to-start",
+          "text": "**Brand new to AI-assisted development?** → Read the Full SOP first to understand the complete process, then use Quick Reference as your daily companion **Have some experience with AI coding tools?** → Jump straight to Quick Reference, consult the Full SOP for edge cases **Setting up a new project?** → Start with AI Tools & Setup, then create your Constitution **Just need to look something up?** → Browse the Library below or use search ---"
         },
         {
           "heading": "If you're in a hurry",
@@ -1283,12 +1116,12 @@
     {
       "title": "TDD & Coverage Policy",
       "path": "content/shared/tdd-and-coverage.md",
-      "description": "TDD & Coverage Policy **Sources of truth**: AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md (Phase 3 + gates) AI-DEV-QUICK-REFERENCE-v1.4.0-FINAL.md (TDD Workflow + Checkpoint Gates) ---",
+      "description": "TDD & Coverage Policy ---",
       "chunks": [
         {
           "heading": "",
           "anchor": "",
-          "text": "TDD & Coverage Policy **Sources of truth**: AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md (Phase 3 + gates) AI-DEV-QUICK-REFERENCE-v1.4.0-FINAL.md (TDD Workflow + Checkpoint Gates) ---"
+          "text": "TDD & Coverage Policy ---"
         },
         {
           "heading": "The rule",
@@ -1320,12 +1153,12 @@
     {
       "title": "Common Situations, Troubleshooting & Emergency Stops",
       "path": "content/shared/troubleshooting-and-emergency-stops.md",
-      "description": "Common Situations, Troubleshooting & Emergency Stops **Sources of truth**: AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md → “Common Situations & Troubleshooting” + “Emergency Stops ⛔” AI-DEV-Q",
+      "description": "Common Situations, Troubleshooting & Emergency Stops ---",
       "chunks": [
         {
           "heading": "",
           "anchor": "",
-          "text": "Common Situations, Troubleshooting & Emergency Stops **Sources of truth**: AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md → “Common Situations & Troubleshooting” + “Emergency Stops ⛔” AI-DEV-QUICK-REFERENCE-v1.4.0-FINAL.md → “Common Situations & Quick Actions” + “Emergency Stops ⛔” ---"
+          "text": "Common Situations, Troubleshooting & Emergency Stops ---"
         },
         {
           "heading": "Common Situations & Troubleshooting",

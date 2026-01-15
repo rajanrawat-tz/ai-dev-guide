@@ -19,6 +19,9 @@ This example walks through building a **User Profile Edit** feature from start t
 
 ## Phase 0: Foundation (30-45 minutes)
 
+**Canonical Phase Doc:** [Phase 0: Foundation & Context Setup](?doc=content/phases/phase-0-foundation.md)
+
+
 ### Step 0.1: Understand Requirements
 
 Read the user story and acceptance criteria carefully. Note:
@@ -69,6 +72,9 @@ Tech stack: TypeScript, Express, PostgreSQL, S3
 ---
 
 ## Phase 1: Specification (45-60 minutes)
+
+**Canonical Phase Doc:** [Phase 1: Specification & Design](?doc=content/phases/phase-1-specification.md)
+
 
 ### Step 1.1: Generate Specification
 
@@ -147,7 +153,51 @@ Context: Express API, PostgreSQL, S3 for files
 
 ## Phase 2: GitHub Planning (15-20 minutes)
 
-### Step 2.1: Create Parent Issue
+**Canonical Phase Doc:** [Phase 2: GitHub Issue Creation & Hierarchy](?doc=content/phases/phase-2-github.md)
+
+
+This walkthrough previously described a top-down flow (create parent issue → then create tasks).
+Our recommended Phase 2 flow is now **AI bottom-up**: create tasks first, then create/link the User Story (and Epic if needed).
+
+### Step 2.1: Create Tasks from `tasks.md` (Recommended)
+
+If you used `/speckit.tasks` in Phase 1, you should now have a `tasks.md` artifact. Use Speckit to turn it into GitHub task issues:
+
+```
+/speckit.taskstoissues
+```
+
+**Output**: Task issues created in GitHub (e.g., `#101` - `#108`).
+
+### Step 2.2: Create User Story and Link the Tasks
+
+Create a User Story issue (parent), then link the already-created task issues as children.
+
+### Step 2.3: (Optional) Create an Epic and Link User Stories
+
+If this feature is one of multiple related user stories, create an Epic and link your User Story issue under it.
+
+### Step 2.4: Verify Hierarchy
+
+Confirm in GitHub Projects that the hierarchy is correct:
+
+```
+Epic (optional)
+  └─ User Story (e.g., US-042)
+      └─ Tasks (#101 - #108)
+```
+
+---
+
+### Manual Alternative (Top-Down)
+
+If you're not using Speckit/AI automation, you can still do it top-down:
+1. Create the parent User Story issue first.
+2. Create task issues and link them to the parent User Story.
+
+---
+
+### Example: User Story Issue (Parent)
 
 ```markdown
 # [US-042] User Profile Edit Feature
@@ -159,14 +209,14 @@ Implement ability for users to edit their profile (name, email, avatar).
 - [ ] User can update display name (2-50 chars)
 - [ ] User can update email (with re-verification)
 - [ ] User can upload avatar (max 2MB, JPG/PNG)
-- [ ] Changes require password confirmation
+- [ ] Changes require current password confirmation
 
 ## Technical Approach
 - PATCH /api/v1/users/me endpoint
 - S3 integration for avatar storage
 - Email verification flow
 
-## Tasks
+## Tasks (link these as child issues)
 - [ ] #101 - Database migration
 - [ ] #102 - S3 service implementation
 - [ ] #103 - Email verification service
@@ -183,48 +233,19 @@ Implement ability for users to edit their profile (name, email, avatar).
 - [ ] Documentation updated
 ```
 
-### Step 2.2: Create Sub-Tasks
-
-Example for Task #105:
-
-```markdown
-# [US-042-05] Profile Update Endpoint
-
-Parent: #100
-
-## Description
-Implement PATCH /api/v1/users/me endpoint for updating profile fields.
-
-## TDD Approach
-1. Write tests for validation errors
-2. Write tests for successful updates
-3. Write tests for password verification
-4. Implement controller
-5. Verify all tests pass
-
-## Acceptance
-- [ ] Validates display_name length
-- [ ] Validates email format and uniqueness
-- [ ] Requires current_password
-- [ ] Returns 200 with updated user
-- [ ] Returns appropriate errors
-
-## Files
-- `src/controllers/UserController.ts`
-- `src/schemas/updateProfile.schema.ts`
-- `tests/controllers/UserController.test.ts`
-```
-
 ### Checkpoint 2
 
-- [x] Parent issue created with all context
-- [x] Sub-tasks created with TDD workflow
-- [x] Tasks linked to parent
+- [x] Tasks created (preferably via `/speckit.taskstoissues`)
+- [x] User Story issue created
+- [x] Tasks linked to User Story
 - [x] Assignees and labels set
 
 ---
 
 ## Phase 3: Implementation (4-6 hours)
+
+**Canonical Phase Doc:** [Phase 3: Implementation](?doc=content/phases/phase-3-implementation.md)
+
 
 ### Task #104: Validation Schemas (TDD Example)
 
@@ -368,6 +389,9 @@ Result: 95% coverage - exceeds 80% threshold.
 
 ## Phase 4: Review (30-45 minutes)
 
+**Canonical Phase Doc:** [Phase 4: Multi-AI Review & Refinement](?doc=content/phases/phase-4-review.md)
+
+
 ### Step 4.1: Multi-Model Review
 
 **Model 1: Claude (Generator)** - Already used for implementation
@@ -426,6 +450,9 @@ Senior developer reviews:
 ---
 
 ## Phase 5: Release (15-20 minutes)
+
+**Canonical Phase Doc:** [Phase 5: PR Creation & Merge](?doc=content/phases/phase-5-release.md)
+
 
 ### Step 5.1: Final Verification
 
