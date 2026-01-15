@@ -758,6 +758,9 @@
                 <div class="sidebar-title">Shared</div>
                 <ul class="nav-links" id="nav-shared"></ul>
 
+                <div class="sidebar-title">What's Next</div>
+                <ul class="nav-links" id="nav-next"></ul>
+
                 <div class="sidebar-title">Reference</div>
                 <ul class="nav-links" id="nav-reference"></ul>
             </div>
@@ -827,6 +830,9 @@
                 { title: 'AI Tools & Setup', path: 'content/shared/ai-tools-and-setup.md' },
                 { title: 'Example Constitution', path: 'content/shared/example-constitution.md' }
             ],
+            next: [
+                { title: 'Agent Mode (Preview)', path: 'content/shared/agent-mode-preview.md' }
+            ],
             reference: [
                 { title: 'Original SOP (download)', path: 'AI-DEVELOPMENT-SOP-v1.4.0-FINAL.md', downloadOnly: true },
                 { title: 'Original Quick Reference (download)', path: 'AI-DEV-QUICK-REFERENCE-v1.4.0-FINAL.md', downloadOnly: true }
@@ -883,7 +889,8 @@
                 ...DOCS.start,
                 ...DOCS.phases,
                 ...DOCS.roles,
-                ...DOCS.shared.filter(d => !d.downloadOnly)
+                ...DOCS.shared.filter(d => !d.downloadOnly),
+                ...DOCS.next
             ];
         }
 
@@ -1309,6 +1316,7 @@
             renderNavList('nav-phases', DOCS.phases);
             renderNavList('nav-roles', DOCS.roles);
             renderNavList('nav-shared', DOCS.shared);
+            renderNavList('nav-next', DOCS.next);
             renderNavList('nav-reference', DOCS.reference);
         }
 
