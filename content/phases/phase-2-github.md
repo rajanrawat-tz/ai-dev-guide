@@ -41,7 +41,7 @@ Epic: "Customer Authentication System"
 Since you already have detailed `tasks.md` from Phase 1, use Speckit to create all task issues at once:
 
 ```bash
-# In your AI chat (Cursor, Windsurf, etc.)
+# In your AI chat (Claude Code, GitHub Copilot,Cursor, etc.)
 /speckit.taskstoissues
 
 # Speckit will automatically:
